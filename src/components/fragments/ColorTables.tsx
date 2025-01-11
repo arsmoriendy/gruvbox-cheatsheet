@@ -1,4 +1,4 @@
-import { createEffect, createSignal, useContext } from "solid-js";
+import { createEffect, createSignal, JSX, useContext } from "solid-js";
 import { SettingsContext, Settings } from "../../contexts/SettingsContext";
 import {
   ColorEntries,
@@ -33,6 +33,16 @@ export const ColorTables = () => {
   );
 };
 
+const borderClass = "border";
+
+const Th = ({ class: className, ...props }: JSX.IntrinsicElements["th"]) => (
+  <th class={`${borderClass} ${className}`} {...props} />
+);
+
+const Td = ({ class: className, ...props }: JSX.IntrinsicElements["td"]) => (
+  <td class={`${borderClass} ${className}`} {...props} />
+);
+
 const ColorTable = ({
   name,
   scheme,
@@ -41,19 +51,19 @@ const ColorTable = ({
   name: string;
   scheme: ColorScheme;
 }) => (
-  <table class="border-collapse border" {...props}>
+  <table class={`border-collapse ${borderClass}`} {...props}>
     <thead>
       <tr>
-        <th colspan={3}>{name}</th>
+        <Th colspan={3}>{name}</Th>
       </tr>
     </thead>
     {Object.values(scheme).map((subTbl) => (
       <>
         <thead>
           <tr>
-            <th>Color</th>
+            <Th>Color</Th>
             {Object.keys(Object.values(subTbl)[0]).map((k) => (
-              <th>{capitalize(k)}</th>
+              <Th>{capitalize(k)}</Th>
             ))}
           </tr>
         </thead>
@@ -77,7 +87,7 @@ const Rows = ({ entries }: { entries: ColorEntries | MonoChromeEntry[] }) =>
   Object.entries(entries).map(
     ([clrName, clrVals]: [string, ColorEntry | MonoChromeEntry]) => (
       <tr>
-        <td>{capitalize(clrName)}</td>
+        <Td>{capitalize(clrName)}</Td>
         {Object.values(clrVals).map((clrVal) => {
           const [{ colorFormat }] = useContext(SettingsContext);
 
@@ -85,7 +95,7 @@ const Rows = ({ entries }: { entries: ColorEntries | MonoChromeEntry[] }) =>
           const colorStr = colorToString.get(colorFormat)!(color);
 
           return (
-            <td
+            <Td
               style={{
                 "background-color": clrVal.hex,
               }}
@@ -96,7 +106,7 @@ const Rows = ({ entries }: { entries: ColorEntries | MonoChromeEntry[] }) =>
             >
               {colorStr}
               <CopyBtn value={colorStr} />
-            </td>
+            </Td>
           );
         })}
       </tr>
