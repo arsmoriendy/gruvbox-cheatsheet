@@ -19,7 +19,7 @@ export const ColorTables = () => {
   const [{ showTable }] = useContext(SettingsContext);
 
   return (
-    <>
+    <div class="lg:flex gap-5 justify-evenly">
       {Object.entries(showTable).map(
         ([tblName, showTbl]) =>
           showTbl && (
@@ -29,7 +29,7 @@ export const ColorTables = () => {
             />
           ),
       )}
-    </>
+    </div>
   );
 };
 
