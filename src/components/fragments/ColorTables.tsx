@@ -1,4 +1,4 @@
-import { useContext } from "solid-js";
+import { createEffect, createSignal, useContext } from "solid-js";
 import { SettingsContext, Settings } from "../../contexts/SettingsContext";
 import {
   ColorEntries,
@@ -12,6 +12,8 @@ import {
   rgbToString,
 } from "../../data/colors";
 import capitalize from "../../lib/capitalize";
+import Copy from "lucide-solid/icons/copy";
+import ClipboardCheck from "lucide-solid/icons/clipboard-check";
 
 export const ColorTables = () => {
   const [{ showTable }] = useContext(SettingsContext);
@@ -82,7 +84,8 @@ const Rows = ({ entries }: { entries: ColorEntries | MonoChromeEntry[] }) =>
         {Object.values(clrVals).map((clrVal) => {
           const [{ colorFormat }] = useContext(SettingsContext);
 
-          let color = clrVal[colorFormat];
+          const color = clrVal[colorFormat];
+          const colorStr = colorToString.get(colorFormat)!(color);
 
           return (
             <td
@@ -92,11 +95,33 @@ const Rows = ({ entries }: { entries: ColorEntries | MonoChromeEntry[] }) =>
               classList={{
                 "text-white": clrVal.hsl.s < 20 || clrVal.hsl.l < 50,
               }}
+              class="relative group"
             >
-              {colorToString.get(colorFormat)!(color)}
+              {colorStr}
+              <CopyBtn value={colorStr} />
             </td>
           );
         })}
       </tr>
     ),
   );
+
+const CopyBtn = ({ value }: { value: string }) => {
+  const [copied, setCopied] = createSignal(false);
+
+  createEffect(() => {
+    copied() && setTimeout(() => setCopied(false), 1000);
+  });
+
+  return (
+    <button
+      onclick={() => {
+        setCopied(true);
+        navigator.clipboard.writeText(value);
+      }}
+      class="hidden group-hover:block absolute right-0 top-1/2 -translate-y-1/2"
+    >
+      {copied() ? <ClipboardCheck /> : <Copy />}
+    </button>
+  );
+};
