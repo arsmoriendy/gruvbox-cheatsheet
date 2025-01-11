@@ -5,7 +5,11 @@ import {
   ColorEntry,
   Colors,
   ColorScheme,
+  HSL,
+  hslToString,
   MonoChromeEntry,
+  RGB,
+  rgbToString,
 } from "../../data/colors";
 import capitalize from "../../lib/capitalize";
 
@@ -70,7 +74,17 @@ const Rows = ({ entries }: { entries: ColorEntries | MonoChromeEntry[] }) =>
         {Object.values(clrVals).map((clrVal) => {
           const [{ colorFormat }] = useContext(SettingsContext);
 
-          return <td>{clrVal[colorFormat]}</td>;
+          let color = clrVal[colorFormat];
+
+          const colorToString = new Map<
+            typeof colorFormat,
+            (c: typeof color) => string
+          >();
+          colorToString.set("rgb", (c) => rgbToString(c as RGB));
+          colorToString.set("hsl", (c) => hslToString(c as HSL));
+          colorToString.set("hex", (c) => c as string);
+
+          return <td>{colorToString.get(colorFormat)!(color)}</td>;
         })}
       </tr>
     ),
