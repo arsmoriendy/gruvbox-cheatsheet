@@ -1,5 +1,5 @@
 import { useContext } from "solid-js";
-import { SettingsContext } from "../../contexts/SettingsContext";
+import { SettingsContext, Settings } from "../../contexts/SettingsContext";
 import {
   ColorEntries,
   ColorEntry,
@@ -66,6 +66,14 @@ const ColorTable = ({
   </table>
 );
 
+const colorToString = new Map<
+  Settings["colorFormat"],
+  (c: HSL | RGB | string) => string
+>();
+colorToString.set("rgb", (c) => rgbToString(c as RGB));
+colorToString.set("hsl", (c) => hslToString(c as HSL));
+colorToString.set("hex", (c) => c as string);
+
 const Rows = ({ entries }: { entries: ColorEntries | MonoChromeEntry[] }) =>
   Object.entries(entries).map(
     ([clrName, clrVals]: [string, ColorEntry | MonoChromeEntry]) => (
@@ -75,14 +83,6 @@ const Rows = ({ entries }: { entries: ColorEntries | MonoChromeEntry[] }) =>
           const [{ colorFormat }] = useContext(SettingsContext);
 
           let color = clrVal[colorFormat];
-
-          const colorToString = new Map<
-            typeof colorFormat,
-            (c: typeof color) => string
-          >();
-          colorToString.set("rgb", (c) => rgbToString(c as RGB));
-          colorToString.set("hsl", (c) => hslToString(c as HSL));
-          colorToString.set("hex", (c) => c as string);
 
           return <td>{colorToString.get(colorFormat)!(color)}</td>;
         })}
