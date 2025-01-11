@@ -3,6 +3,10 @@ import { createStore } from "solid-js/store";
 
 export type Settings = {
   colorFormat: "hsl" | "rgb" | "hex";
+  showTable: {
+    dark: boolean;
+    light: boolean;
+  };
 };
 
 const lsKey = "gruvboxCheatsheetSettings";
@@ -12,6 +16,10 @@ const defaultSettings: Settings = lsSettings
   ? JSON.parse(lsSettings)
   : {
       colorFormat: "hsl",
+      showTable: {
+        dark: true,
+        light: true,
+      },
     };
 
 const settingsStore = createStore(defaultSettings);

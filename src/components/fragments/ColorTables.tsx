@@ -10,11 +10,19 @@ import {
 import capitalize from "../../lib/capitalize";
 
 export const ColorTables = () => {
+  const [{ showTable }] = useContext(SettingsContext);
+
   return (
     <>
-      {Object.entries(Colors).map(([name, scheme]) => {
-        return <ColorTable name={capitalize(name)} scheme={scheme} />;
-      })}
+      {Object.entries(showTable).map(
+        ([tblName, showTbl]) =>
+          showTbl && (
+            <ColorTable
+              name={`${capitalize(tblName)} Table`}
+              scheme={Colors[`${tblName}Mode` as keyof Colors]}
+            />
+          ),
+      )}
     </>
   );
 };
