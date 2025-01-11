@@ -41,30 +41,27 @@ const ColorTable = ({
   name: string;
   scheme: ColorScheme;
 }) => (
-  <table {...props}>
+  <table class="border-collapse border" {...props}>
     <thead>
       <tr>
         <th colspan={3}>{name}</th>
       </tr>
-      <tr>
-        <th>Color</th>
-        <th>Muted</th>
-        <th>Strong</th>
-      </tr>
     </thead>
-    <tbody>
-      <Rows entries={scheme.colors} />
-    </tbody>
-    <thead>
-      <tr>
-        <th>Monochrome</th>
-        <th>Foreground</th>
-        <th>Background</th>
-      </tr>
-    </thead>
-    <tbody>
-      <Rows entries={scheme.monochrome} />
-    </tbody>
+    {Object.values(scheme).map((subTbl) => (
+      <>
+        <thead>
+          <tr>
+            <th>Color</th>
+            {Object.keys(Object.values(subTbl)[0]).map((k) => (
+              <th>{capitalize(k)}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          <Rows entries={subTbl} />
+        </tbody>
+      </>
+    ))}
   </table>
 );
 
