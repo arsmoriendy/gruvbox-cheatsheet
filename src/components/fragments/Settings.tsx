@@ -57,6 +57,14 @@ export default () => {
           </>
         );
       })}
+
+      <input
+        type="checkbox"
+        id="roundFloatsCheckbox"
+        checked={settings.roundFloats}
+        oninput={() => setSettings("roundFloats", !settings.roundFloats)}
+      />
+      <label for="roundFloatsCheckbox">Round Floats</label>
     </>
   );
 };

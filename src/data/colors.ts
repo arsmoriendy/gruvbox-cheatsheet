@@ -11,7 +11,19 @@ export type HSL = {
 };
 
 export const rgbToString = (rgb: RGB) => `rgb(${rgb.r}, ${rgb.b}, ${rgb.b})`;
-export const hslToString = (hsl: HSL) => `hsl(${hsl.h}, ${hsl.s}%, ${hsl.l}%)`;
+
+type HSLtoStringParams = {
+  roundFloats?: boolean;
+};
+
+const hslToStirngDefaultParams: HSLtoStringParams = {
+  roundFloats: false,
+};
+
+export const hslToString = (hsl: HSL, params?: HSLtoStringParams) => {
+  const { roundFloats } = { ...hslToStirngDefaultParams, ...params };
+  return `hsl(${hsl.h}, ${roundFloats ? Math.round(hsl.s) : hsl.s}%, ${roundFloats ? Math.round(hsl.l) : hsl.l}%)`;
+};
 
 export type ColorValues = {
   hex: string;

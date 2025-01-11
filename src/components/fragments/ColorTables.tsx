@@ -15,12 +15,23 @@ import capitalize from "../../lib/capitalize";
 import Copy from "lucide-solid/icons/copy";
 import ClipboardCheck from "lucide-solid/icons/clipboard-check";
 
+const colorToString = new Map<
+  Settings["colorFormat"],
+  (c: HSL | RGB | string) => string
+>();
+
 export const ColorTables = () => {
-  const [{ showTable }] = useContext(SettingsContext);
+  const [settings] = useContext(SettingsContext);
+
+  colorToString.set("rgb", (c) => rgbToString(c as RGB));
+  colorToString.set("hsl", (c) =>
+    hslToString(c as HSL, { roundFloats: settings.roundFloats }),
+  );
+  colorToString.set("hex", (c) => c as string);
 
   return (
     <div class="lg:flex gap-5 justify-evenly">
-      {Object.entries(showTable).map(
+      {Object.entries(settings.showTable).map(
         ([tblName, showTbl]) =>
           showTbl && (
             <ColorTable
@@ -74,14 +85,6 @@ const ColorTable = ({
     ))}
   </table>
 );
-
-const colorToString = new Map<
-  Settings["colorFormat"],
-  (c: HSL | RGB | string) => string
->();
-colorToString.set("rgb", (c) => rgbToString(c as RGB));
-colorToString.set("hsl", (c) => hslToString(c as HSL));
-colorToString.set("hex", (c) => c as string);
 
 const Rows = ({ entries }: { entries: ColorEntries | MonoChromeEntry[] }) =>
   Object.entries(entries).map(

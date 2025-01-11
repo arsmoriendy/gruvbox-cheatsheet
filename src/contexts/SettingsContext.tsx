@@ -7,6 +7,7 @@ export type Settings = {
     dark: boolean;
     light: boolean;
   };
+  roundFloats: boolean;
 };
 
 const lsKey = "gruvboxCheatsheetSettings";
@@ -20,6 +21,7 @@ const defaultSettings: Settings = lsSettings
         dark: true,
         light: true,
       },
+      roundFloats: false,
     };
 
 const settingsStore = createStore(defaultSettings);
