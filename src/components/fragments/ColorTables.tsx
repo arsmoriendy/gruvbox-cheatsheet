@@ -84,7 +84,18 @@ const Rows = ({ entries }: { entries: ColorEntries | MonoChromeEntry[] }) =>
 
           let color = clrVal[colorFormat];
 
-          return <td>{colorToString.get(colorFormat)!(color)}</td>;
+          return (
+            <td
+              style={{
+                "background-color": clrVal.hex,
+              }}
+              classList={{
+                "text-white": clrVal.hsl.s < 20 || clrVal.hsl.l < 50,
+              }}
+            >
+              {colorToString.get(colorFormat)!(color)}
+            </td>
+          );
         })}
       </tr>
     ),
