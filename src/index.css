@@ -2,6 +2,36 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  :root {
+    --background: 53 74% 91%;
+    --foreground: 0 0% 16%;
+    --muted: 46 68% 84%;
+    --muted-foreground: 28 11% 44%;
+    --border: 43 59% 81%;
+    --primary: 143 30% 37%;
+    --primary-foreground: var(--background);
+    --secondary: 57 79% 27%;
+    --secondary-foreground: var(--background);
+    --accent: 37 80% 39%;
+    --accent-foreground: var(--background);
+    --destructive: 358 100% 31%;
+    --destructive-foreground: var(--foreground);
+  }
+
+  .dark {
+    --background: 195 6% 12%;
+    --foreground: 48 87% 88%;
+    --muted: 20 3% 19%;
+    --muted-foreground: 35 17% 59%;
+    --border: 20 5% 22%;
+    --primary: 104 35% 62%;
+    --secondary: 61 66% 44%;
+    --accent: 42 95% 58%;
+    --destructive-foreground: var(--background);
+  }
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
