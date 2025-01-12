@@ -6,6 +6,20 @@
     <meta name="theme-color" content="#000000" />
     <link rel="shortcut icon" type="image/ico" href="/src/assets/favicon.ico" />
     <title>Solid App</title>
+    <script>
+      const htmlClasses = document.documentElement.classList;
+
+      function darken() {
+        htmlClasses.contains("dark") || htmlClasses.add("dark");
+      }
+
+      function isSystemDark() {
+        const { matches } = window.matchMedia("(prefers-color-scheme:dark)");
+        return matches;
+      }
+
+      isSystemDark() && darken();
+    </script>
   </head>
   <body class="min-h-screen">
     <noscript>You need to enable JavaScript to run this app.</noscript>
