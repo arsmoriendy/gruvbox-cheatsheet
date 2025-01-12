@@ -101,9 +101,10 @@ const Rows = ({ entries }: { entries: ColorEntries | MonoChromeEntry[] }) =>
             <Td
               style={{
                 "background-color": clrVal.hex,
-              }}
-              classList={{
-                "text-white": clrVal.hsl.s < 20 || clrVal.hsl.l < 50,
+                color:
+                  clrVal.hsl.s < 20 || clrVal.hsl.l < 50
+                    ? "hsl(48 87% 88%)"
+                    : "hsl(0 0% 16%)",
               }}
               class="relative group"
             >
