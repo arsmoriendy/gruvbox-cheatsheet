@@ -22,7 +22,9 @@ const hslToStirngDefaultParams: HSLtoStringParams = {
 
 export const hslToString = (hsl: HSL, params?: HSLtoStringParams) => {
   const { roundFloats } = { ...hslToStirngDefaultParams, ...params };
-  return `hsl(${hsl.h}, ${roundFloats ? Math.round(hsl.s) : hsl.s}%, ${roundFloats ? Math.round(hsl.l) : hsl.l}%)`;
+  return `hsl(${hsl.h}, ${roundFloats ? Math.round(hsl.s) : hsl.s}%, ${
+    roundFloats ? Math.round(hsl.l) : hsl.l
+  }%)`;
 };
 
 export type ColorValues = {
