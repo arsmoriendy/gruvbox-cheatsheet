@@ -9,7 +9,6 @@ const zsodm = <S extends z.SomeZodObject>(
 
   // iterate through schema keys and types
   Object.entries(schema.shape).forEach(([k, zType]) => {
-    zType = zType;
     const srcVal = srcObj[k];
 
     // recursively run this function on object types
