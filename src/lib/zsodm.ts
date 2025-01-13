@@ -4,7 +4,7 @@ const zsodm = <S extends z.SomeZodObject>(
   srcObj: { [k: string]: any },
   defObj: z.infer<S>,
   schema: S,
-): S => {
+) => {
   const retObj: { [k: string]: any } = {};
 
   // iterate through schema keys and types
@@ -27,7 +27,7 @@ const zsodm = <S extends z.SomeZodObject>(
     return;
   });
 
-  return retObj as S;
+  return retObj as z.infer<S>;
 };
 
 /**
@@ -42,6 +42,6 @@ const wrapped = <S extends z.SomeZodObject, D extends z.ZodDefault<S>>(
     [k: string]: any;
   },
   schema: D,
-): S => zsodm(srcObj, schema._def.defaultValue(), schema._def.innerType);
+) => zsodm(srcObj, schema._def.defaultValue(), schema._def.innerType);
 
 export default wrapped;
