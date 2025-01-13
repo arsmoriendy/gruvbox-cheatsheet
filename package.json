@@ -8,6 +8,8 @@
     "start": "vite",
     "dev": "vite",
     "build": "vite build",
+    "serve": "vite preview",
+    "test": "vitest"
   },
   "license": "MIT",
   "devDependencies": {
