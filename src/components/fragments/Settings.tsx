@@ -75,6 +75,14 @@ export default () => {
         }
       />
       <label for="spaceSeparatorsCheckbox">Space Separators</label>
+
+      <input
+        type="checkbox"
+        id="usePercentCheckbox"
+        checked={settings.usePercent}
+        oninput={() => setSettings("usePercent", !settings.usePercent)}
+      />
+      <label for="usePercentCheckbox">Use Percent</label>
     </>
   );
 };
