@@ -1,8 +1,19 @@
 import { createEffect, useContext } from "solid-js";
-import { Settings, SettingsContext } from "../../contexts/SettingsContext";
+import {
+  Settings,
+  SettingsContext,
+  SettingsSchema,
+} from "../../contexts/SettingsContext";
 import capitalize from "../../lib/capitalize";
 import { Checkbox } from "../elements/checkbox";
 import { Label } from "../elements/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../elements/select";
 
 export default () => {
   const [settings, setSettings] = useContext(SettingsContext);
@@ -26,17 +37,23 @@ export default () => {
 
   return (
     <>
-      <select
-        oninput={(e) => {
-          const colorFormat = e.currentTarget.value as Settings["colorFormat"];
-          setSettings("colorFormat", colorFormat);
-        }}
+      <Select
         value={settings.colorFormat}
+        options={SettingsSchema._def.innerType.shape.colorFormat._def.values}
+        onChange={(format) => setSettings("colorFormat", format!)}
+        itemComponent={(props) => (
+          <SelectItem item={props.item}>
+            {props.item.rawValue.toUpperCase()}
+          </SelectItem>
+        )}
       >
-        <option value="hsl">hsl</option>
-        <option value="rgb">rgb</option>
-        <option value="hex">hex</option>
-      </select>
+        <SelectTrigger aria-label="Tables" class="w-[180px]">
+          <SelectValue<string>>
+            {(state) => state.selectedOption().toUpperCase()}
+          </SelectValue>
+        </SelectTrigger>
+        <SelectContent />
+      </Select>
 
       {Object.entries(settings.showTable).map(([tblName, showTbl]) => {
         const id = `${tblName}TableCheckbox`;
