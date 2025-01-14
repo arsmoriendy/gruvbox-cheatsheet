@@ -24,9 +24,7 @@ export const ColorTables = () => {
   const [settings] = useContext(SettingsContext);
 
   colorToString.set("rgb", (c) => rgbToString(c as RGB));
-  colorToString.set("hsl", (c) =>
-    hslToString(c as HSL, { roundFloats: settings.roundFloats }),
-  );
+  colorToString.set("hsl", (c) => hslToString(c as HSL));
   colorToString.set("hex", (c) => c as string);
 
   return (

@@ -18,16 +18,8 @@ export const rgbToString = (rgb: RGB) => {
   return `rgb(${rgb.r}${separator} ${rgb.b}${separator} ${rgb.b})`;
 };
 
-type HSLtoStringParams = {
-  roundFloats?: boolean;
-};
-
-const hslToStirngDefaultParams: HSLtoStringParams = {
-  roundFloats: false,
-};
-
-export const hslToString = (hsl: HSL, params?: HSLtoStringParams) => {
-  const { roundFloats } = { ...hslToStirngDefaultParams, ...params };
+export const hslToString = (hsl: HSL) => {
+  const [{ roundFloats }] = useContext(SettingsContext);
   return `hsl(${hsl.h}, ${roundFloats ? Math.round(hsl.s) : hsl.s}%, ${
     roundFloats ? Math.round(hsl.l) : hsl.l
   }%)`;
