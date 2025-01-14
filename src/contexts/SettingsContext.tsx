@@ -12,6 +12,7 @@ const SettingsSchema = z
       light: z.boolean(),
     }),
     roundFloats: z.boolean(),
+    usePercent: z.boolean(),
     separator: z.enum([" ", ", "]),
   })
   .default({
@@ -21,6 +22,7 @@ const SettingsSchema = z
       light: true,
     },
     roundFloats: false,
+    usePercent: true,
     separator: ", ",
   });
 
