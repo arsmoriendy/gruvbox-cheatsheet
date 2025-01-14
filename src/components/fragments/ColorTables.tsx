@@ -10,7 +10,7 @@ export const ColorTables = () => {
   const [settings] = useContext(SettingsContext);
 
   return (
-    <div class="xl:flex gap-5 justify-evenly">
+    <div class="flex flex-col xl:flex-row gap-5 items-center xl:justify-evenly m-5">
       {Object.entries(settings.showTable).map(
         ([tblName, showTbl]) =>
           showTbl && (
