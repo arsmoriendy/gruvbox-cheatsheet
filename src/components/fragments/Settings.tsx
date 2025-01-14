@@ -44,7 +44,7 @@ const SettingsLabel = ({ inputId, children }: SettingsLabelProps) => (
 type SettingsEntryProps = { children: JSXElement };
 
 const SettingsEntry = ({ children }: SettingsEntryProps) => (
-  <div class="flex justify-between">{children}</div>
+  <div class="flex justify-between items-center">{children}</div>
 );
 
 const SettingsContent = () => {
