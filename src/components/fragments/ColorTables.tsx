@@ -4,6 +4,7 @@ import * as colors from "../../data/colors";
 import capitalize from "../../lib/capitalize";
 import Copy from "lucide-solid/icons/copy";
 import ClipboardCheck from "lucide-solid/icons/clipboard-check";
+import { Button } from "../elements/button";
 
 export const ColorTables = () => {
   const [settings] = useContext(SettingsContext);
@@ -92,7 +93,7 @@ const Rows = ({
                     ? "hsl(48 87% 88%)"
                     : "hsl(0 0% 16%)",
               }}
-              class="relative group"
+              class="relative group pl-2 pr-8 py-2"
             >
               {colorStr}
               <CopyBtn value={colorStr} />
@@ -111,14 +112,16 @@ const CopyBtn = ({ value }: { value: string }) => {
   });
 
   return (
-    <button
+    <Button
+      size="icon"
+      variant="outline"
       onclick={() => {
         setCopied(true);
         navigator.clipboard.writeText(value);
       }}
-      class="hidden group-hover:block absolute right-0 top-1/2 -translate-y-1/2"
+      class="opacity-0 group-hover:opacity-100 absolute right-1 top-1/2 -translate-y-1/2 size-7"
     >
       {copied() ? <ClipboardCheck /> : <Copy />}
-    </button>
+    </Button>
   );
 };
