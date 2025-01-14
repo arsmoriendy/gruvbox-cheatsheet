@@ -6,7 +6,7 @@ test("HSL stringify", () => {
 });
 
 test("RGB stringify", () => {
-  expect(Stringify({ r: 0, g: 0, b: 0 })).toBe("rgb(0, 0, 0)");
+  expect(Stringify({ r: 0, g: 0, b: 0 })).toBe("rgb(0.0%, 0.0%, 0.0%)");
 });
 
 test("HEX stringify", () => {

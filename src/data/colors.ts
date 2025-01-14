@@ -28,8 +28,16 @@ export const Stringify = (c: Color): string => {
 
   if ((<RGB>c).r !== undefined) {
     c = c as RGB;
-    const [{ separator }] = useContext(SettingsContext);
-    return `rgb(${c.r}${separator}${c.b}${separator}${c.b})`;
+    const [{ separator, usePercent, roundFloats }] =
+      useContext(SettingsContext);
+    const cPercent = (x: number) => {
+      const xp = (x / 255) * 100;
+      return usePercent
+        ? `${roundFloats ? Math.round(xp) : xp.toFixed(1)}%`
+        : x;
+    };
+
+    return `rgb(${cPercent(c.r)}${separator}${cPercent(c.g)}${separator}${cPercent(c.b)})`;
   }
 
   return c as string;
