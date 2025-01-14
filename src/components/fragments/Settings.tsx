@@ -65,6 +65,16 @@ export default () => {
         oninput={() => setSettings("roundFloats", !settings.roundFloats)}
       />
       <label for="roundFloatsCheckbox">Round Floats</label>
+
+      <input
+        type="checkbox"
+        id="spaceSeparatorsCheckbox"
+        checked={settings.separator == " "}
+        oninput={() =>
+          setSettings("separator", settings.separator === " " ? ", " : " ")
+        }
+      />
+      <label for="spaceSeparatorsCheckbox">Space Separators</label>
     </>
   );
 };

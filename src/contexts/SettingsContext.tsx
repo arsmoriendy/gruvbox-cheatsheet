@@ -12,6 +12,7 @@ const SettingsSchema = z
       light: z.boolean(),
     }),
     roundFloats: z.boolean(),
+    separator: z.enum([" ", ", "]),
   })
   .default({
     colorFormat: "hsl",
@@ -20,6 +21,7 @@ const SettingsSchema = z
       light: true,
     },
     roundFloats: false,
+    separator: ", ",
   });
 
 export type Settings = z.infer<typeof SettingsSchema>;
