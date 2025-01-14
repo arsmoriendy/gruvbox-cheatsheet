@@ -10,7 +10,7 @@ export const ColorTables = () => {
   const [settings] = useContext(SettingsContext);
 
   return (
-    <div class="flex flex-col xl:flex-row gap-5 items-center xl:justify-evenly m-5">
+    <div class="flex flex-col lg:flex-row gap-5 items-center lg:justify-evenly m-5">
       {Object.entries(settings.showTable).map(
         ([tblName, showTbl]) =>
           showTbl && (
@@ -93,7 +93,7 @@ const Rows = ({
                     ? "hsl(48 87% 88%)"
                     : "hsl(0 0% 16%)",
               }}
-              class="relative group pl-2 pr-8 py-2"
+              class="relative group py-2"
             >
               {colorStr}
               <CopyBtn value={colorStr} />
@@ -119,7 +119,7 @@ const CopyBtn = ({ value }: { value: string }) => {
         setCopied(true);
         navigator.clipboard.writeText(value);
       }}
-      class="opacity-0 group-hover:opacity-100 absolute right-1 top-1/2 -translate-y-1/2 size-7"
+      class="opacity-0 group-hover:opacity-100 absolute right-1 top-1/2 -translate-y-1/2 bg-background text-foreground size-7"
     >
       {copied() ? <ClipboardCheck /> : <Copy />}
     </Button>
