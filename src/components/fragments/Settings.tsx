@@ -1,6 +1,8 @@
 import { createEffect, useContext } from "solid-js";
 import { Settings, SettingsContext } from "../../contexts/SettingsContext";
 import capitalize from "../../lib/capitalize";
+import { Checkbox } from "../elements/checkbox";
+import { Label } from "../elements/label";
 
 export default () => {
   const [settings, setSettings] = useContext(SettingsContext);
@@ -40,11 +42,10 @@ export default () => {
         const id = `${tblName}TableCheckbox`;
         return (
           <>
-            <input
-              type="checkbox"
+            <Checkbox
               id={id}
               checked={showTbl}
-              oninput={() => {
+              onChange={() => {
                 lastToggled = tblName as keyof Settings["showTable"];
                 setSettings(
                   "showTable",
@@ -53,36 +54,33 @@ export default () => {
                 );
               }}
             />
-            <label for={id}>{capitalize(tblName)} Table</label>
+            <Label for={`${id}-input`}>{capitalize(tblName)} Table</Label>
           </>
         );
       })}
 
-      <input
-        type="checkbox"
+      <Checkbox
         id="roundFloatsCheckbox"
         checked={settings.roundFloats}
-        oninput={() => setSettings("roundFloats", !settings.roundFloats)}
+        onChange={() => setSettings("roundFloats", !settings.roundFloats)}
       />
-      <label for="roundFloatsCheckbox">Round Floats</label>
+      <Label for="roundFloatsCheckbox-input">Round Floats</Label>
 
-      <input
-        type="checkbox"
+      <Checkbox
         id="spaceSeparatorsCheckbox"
         checked={settings.separator == " "}
-        oninput={() =>
+        onChange={() =>
           setSettings("separator", settings.separator === " " ? ", " : " ")
         }
       />
-      <label for="spaceSeparatorsCheckbox">Space Separators</label>
+      <Label for="spaceSeparatorsCheckbox-input">Space Separators</Label>
 
-      <input
-        type="checkbox"
+      <Checkbox
         id="usePercentCheckbox"
         checked={settings.usePercent}
-        oninput={() => setSettings("usePercent", !settings.usePercent)}
+        onChange={() => setSettings("usePercent", !settings.usePercent)}
       />
-      <label for="usePercentCheckbox">Use Percent</label>
+      <Label for="usePercentCheckbox-input">Use Percent</Label>
     </>
   );
 };
