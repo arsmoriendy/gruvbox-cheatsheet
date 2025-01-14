@@ -20,9 +20,9 @@ export const rgbToString = (rgb: RGB) => {
 
 export const hslToString = (hsl: HSL) => {
   const [{ roundFloats }] = useContext(SettingsContext);
-  return `hsl(${hsl.h}, ${roundFloats ? Math.round(hsl.s) : hsl.s}%, ${
-    roundFloats ? Math.round(hsl.l) : hsl.l
-  }%)`;
+  const cRound = (x: number) => (roundFloats ? Math.round(x) : x);
+
+  return `hsl(${hsl.h}, ${cRound(hsl.s)}%, ${cRound(hsl.l)}%)`;
 };
 
 export type ColorValues = {
