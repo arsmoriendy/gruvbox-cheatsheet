@@ -1,29 +1,37 @@
 import { useContext } from "solid-js";
 import { SettingsContext } from "../contexts/SettingsContext";
 
-export class RGB {
-  r: number = 0;
-  g: number = 0;
-  b: number = 0;
+export type RGB = {
+  r: number;
+  g: number;
+  b: number;
+};
 
-  toString() {
-    const [{ separator }] = useContext(SettingsContext);
-    return `rgb(${this.r}${separator}${this.b}${separator}${this.b})`;
-  }
-}
+export type HSL = {
+  h: number;
+  s: number;
+  l: number;
+};
 
-export class HSL {
-  h: number = 0;
-  s: number = 0;
-  l: number = 0;
+export type Color = RGB | HSL | string;
 
-  toString() {
+export const Stringify = (c: Color): string => {
+  if ((<HSL>c).h !== undefined) {
+    c = c as HSL;
     const [{ roundFloats, separator }] = useContext(SettingsContext);
     const cRound = (x: number) => (roundFloats ? Math.round(x) : x);
 
-    return `hsl(${this.h}${separator}${cRound(this.s)}%${separator}${cRound(this.l)}%)`;
+    return `hsl(${c.h}${separator}${cRound(c.s)}%${separator}${cRound(c.l)}%)`;
   }
-}
+
+  if ((<RGB>c).r !== undefined) {
+    c = c as RGB;
+    const [{ separator }] = useContext(SettingsContext);
+    return `rgb(${c.r}${separator}${c.b}${separator}${c.b})`;
+  }
+
+  return c as string;
+};
 
 export type ColorValues = {
   hex: string;

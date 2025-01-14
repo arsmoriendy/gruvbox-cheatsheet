@@ -81,7 +81,7 @@ const Rows = ({
           const [{ colorFormat }] = useContext(SettingsContext);
 
           const color = clrVal[colorFormat];
-          const colorStr = color.toString();
+          const colorStr = colors.Stringify(color);
 
           return (
             <Td
