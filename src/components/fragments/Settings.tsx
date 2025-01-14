@@ -20,6 +20,7 @@ export default () => {
 
   let lastToggled: keyof Settings["showTable"];
 
+  // show at least one table
   createEffect(() => {
     const { showTable } = settings;
     const show1 = Object.values(showTable).includes(true);
