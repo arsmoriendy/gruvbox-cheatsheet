@@ -38,6 +38,7 @@ export default () => {
   return (
     <>
       <Select
+        disallowEmptySelection
         value={settings.colorFormat}
         options={SettingsSchema._def.innerType.shape.colorFormat._def.values}
         onChange={(format) => setSettings("colorFormat", format!)}
