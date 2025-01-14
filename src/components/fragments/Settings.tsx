@@ -1,4 +1,4 @@
-import { createEffect, useContext } from "solid-js";
+import { createEffect, JSXElement, useContext } from "solid-js";
 import {
   Settings,
   SettingsContext,
@@ -14,8 +14,40 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../elements/select";
+import { Popover, PopoverContent, PopoverTrigger } from "../elements/popover";
+import { Button, ButtonProps } from "../elements/button";
+import Cog from "lucide-solid/icons/cog";
 
 export default () => {
+  return (
+    <Popover>
+      <PopoverTrigger as={SettingsTriggerButton} />
+      <PopoverContent class="flex flex-col gap-5">
+        <SettingsContent />
+      </PopoverContent>
+    </Popover>
+  );
+};
+
+const SettingsTriggerButton = (props: ButtonProps) => (
+  <Button size="icon" variant="outline" {...props}>
+    <Cog />
+  </Button>
+);
+
+type SettingsLabelProps = { inputId: string; children: JSXElement };
+
+const SettingsLabel = ({ inputId, children }: SettingsLabelProps) => (
+  <Label for={`${inputId}-input`}>{children}</Label>
+);
+
+type SettingsEntryProps = { children: JSXElement };
+
+const SettingsEntry = ({ children }: SettingsEntryProps) => (
+  <div class="flex justify-between">{children}</div>
+);
+
+const SettingsContent = () => {
   const [settings, setSettings] = useContext(SettingsContext);
 
   let lastToggled: keyof Settings["showTable"];
@@ -36,31 +68,54 @@ export default () => {
     );
   });
 
+  const ids = {
+    usePercent: "usePercentCheckbox",
+    colorFormat: "colorFormatSelect",
+    roundFloats: "roundFloatsCheckbox",
+    separator: "separatorSelect",
+  };
+
   return (
     <>
-      <Select
-        disallowEmptySelection
-        value={settings.colorFormat}
-        options={SettingsSchema._def.innerType.shape.colorFormat._def.values}
-        onChange={(format) => setSettings("colorFormat", format!)}
-        itemComponent={(props) => (
-          <SelectItem item={props.item}>
-            {props.item.rawValue.toUpperCase()}
-          </SelectItem>
-        )}
-      >
-        <SelectTrigger aria-label="Tables" class="w-[180px]">
-          <SelectValue<string>>
-            {(state) => state.selectedOption().toUpperCase()}
-          </SelectValue>
-        </SelectTrigger>
-        <SelectContent />
-      </Select>
+      <SettingsEntry>
+        <SettingsLabel inputId={ids.usePercent}>Use Percent</SettingsLabel>
+        <Checkbox
+          id={ids.usePercent}
+          checked={settings.usePercent}
+          onChange={() => setSettings("usePercent", !settings.usePercent)}
+        />
+      </SettingsEntry>
+
+      <SettingsEntry>
+        <SettingsLabel inputId={ids.colorFormat}>Color Format</SettingsLabel>
+        <Select
+          id={ids.colorFormat}
+          disallowEmptySelection
+          value={settings.colorFormat}
+          options={SettingsSchema._def.innerType.shape.colorFormat._def.values}
+          onChange={(format) => setSettings("colorFormat", format!)}
+          itemComponent={(props) => (
+            <SelectItem item={props.item}>
+              {props.item.rawValue.toUpperCase()}
+            </SelectItem>
+          )}
+        >
+          <SelectTrigger aria-label="Tables">
+            <SelectValue<string>>
+              {(state) => state.selectedOption().toUpperCase()}
+            </SelectValue>
+          </SelectTrigger>
+          <SelectContent />
+        </Select>
+      </SettingsEntry>
 
       {Object.entries(settings.showTable).map(([tblName, showTbl]) => {
         const id = `${tblName}TableCheckbox`;
         return (
-          <>
+          <SettingsEntry>
+            <SettingsLabel inputId={id}>
+              {capitalize(tblName)} Table
+            </SettingsLabel>
             <Checkbox
               id={id}
               checked={showTbl}
@@ -73,33 +128,29 @@ export default () => {
                 );
               }}
             />
-            <Label for={`${id}-input`}>{capitalize(tblName)} Table</Label>
-          </>
+          </SettingsEntry>
         );
       })}
 
-      <Checkbox
-        id="roundFloatsCheckbox"
-        checked={settings.roundFloats}
-        onChange={() => setSettings("roundFloats", !settings.roundFloats)}
-      />
-      <Label for="roundFloatsCheckbox-input">Round Floats</Label>
+      <SettingsEntry>
+        <SettingsLabel inputId={ids.roundFloats}>Round Floats</SettingsLabel>
+        <Checkbox
+          id={ids.roundFloats}
+          checked={settings.roundFloats}
+          onChange={() => setSettings("roundFloats", !settings.roundFloats)}
+        />
+      </SettingsEntry>
 
-      <Checkbox
-        id="spaceSeparatorsCheckbox"
-        checked={settings.separator == " "}
-        onChange={() =>
-          setSettings("separator", settings.separator === " " ? ", " : " ")
-        }
-      />
-      <Label for="spaceSeparatorsCheckbox-input">Space Separators</Label>
-
-      <Checkbox
-        id="usePercentCheckbox"
-        checked={settings.usePercent}
-        onChange={() => setSettings("usePercent", !settings.usePercent)}
-      />
-      <Label for="usePercentCheckbox-input">Use Percent</Label>
+      <SettingsEntry>
+        <SettingsLabel inputId={ids.separator}>Space Separators</SettingsLabel>
+        <Checkbox
+          id={ids.separator}
+          checked={settings.separator == " "}
+          onChange={() =>
+            setSettings("separator", settings.separator === " " ? ", " : " ")
+          }
+        />
+      </SettingsEntry>
     </>
   );
 };
