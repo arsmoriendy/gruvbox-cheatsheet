@@ -18,10 +18,12 @@ export type Color = RGB | HSL | string;
 export const Stringify = (c: Color): string => {
   if ((<HSL>c).h !== undefined) {
     c = c as HSL;
-    const [{ roundFloats, separator }] = useContext(SettingsContext);
+    const [{ roundFloats, separator, usePercent }] =
+      useContext(SettingsContext);
     const cRound = (x: number) => (roundFloats ? Math.round(x) : x);
+    const cPercent = usePercent ? "%" : "";
 
-    return `hsl(${c.h}${separator}${cRound(c.s)}%${separator}${cRound(c.l)}%)`;
+    return `hsl(${c.h}${separator}${cRound(c.s)}${cPercent}${separator}${cRound(c.l)}${cPercent})`;
   }
 
   if ((<RGB>c).r !== undefined) {
