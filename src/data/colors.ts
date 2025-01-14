@@ -15,7 +15,7 @@ export type HSL = {
 
 export const rgbToString = (rgb: RGB) => {
   const [{ separator }] = useContext(SettingsContext);
-  return `rgb(${rgb.r}${separator} ${rgb.b}${separator} ${rgb.b})`;
+  return `rgb(${rgb.r}${separator}${rgb.b}${separator}${rgb.b})`;
 };
 
 export const hslToString = (hsl: HSL) => {
