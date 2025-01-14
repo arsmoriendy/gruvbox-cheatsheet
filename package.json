@@ -13,6 +13,7 @@
   },
   "license": "MIT",
   "devDependencies": {
+    "@types/node": "^22.10.6",
     "autoprefixer": "^10.4.20",
     "jsdom": "^26.0.0",
     "postcss": "^8.4.49",
@@ -24,8 +25,13 @@
     "vitest": "^2.1.8"
   },
   "dependencies": {
+    "@kobalte/core": "^0.13.7",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
     "lucide-solid": "^0.471.0",
     "solid-js": "^1.9.3",
+    "tailwind-merge": "^2.6.0",
+    "tailwindcss-animate": "^1.0.7",
     "zod": "^3.24.1"
   }
 }
