@@ -1,31 +1,12 @@
 import { createEffect, createSignal, JSX, useContext } from "solid-js";
-import { SettingsContext, Settings } from "../../contexts/SettingsContext";
-import {
-  ColorEntries,
-  ColorEntry,
-  Colors,
-  ColorScheme,
-  HSL,
-  hslToString,
-  MonoChromeEntry,
-  RGB,
-  rgbToString,
-} from "../../data/colors";
+import { SettingsContext } from "../../contexts/SettingsContext";
+import * as colors from "../../data/colors";
 import capitalize from "../../lib/capitalize";
 import Copy from "lucide-solid/icons/copy";
 import ClipboardCheck from "lucide-solid/icons/clipboard-check";
 
-const colorToString = new Map<
-  Settings["colorFormat"],
-  (c: HSL | RGB | string) => string
->();
-
 export const ColorTables = () => {
   const [settings] = useContext(SettingsContext);
-
-  colorToString.set("rgb", (c) => rgbToString(c as RGB));
-  colorToString.set("hsl", (c) => hslToString(c as HSL));
-  colorToString.set("hex", (c) => c as string);
 
   return (
     <div class="lg:flex gap-5 justify-evenly">
@@ -34,7 +15,7 @@ export const ColorTables = () => {
           showTbl && (
             <ColorTable
               name={`${capitalize(tblName)} Table`}
-              scheme={Colors[`${tblName}Mode` as keyof Colors]}
+              scheme={colors.Colors[`${tblName}Mode` as keyof colors.Colors]}
             />
           ),
       )}
@@ -58,7 +39,7 @@ const ColorTable = ({
   ...props
 }: {
   name: string;
-  scheme: ColorScheme;
+  scheme: colors.ColorScheme;
 }) => (
   <table class={`border-collapse ${borderClass}`} {...props}>
     <thead>
@@ -84,16 +65,23 @@ const ColorTable = ({
   </table>
 );
 
-const Rows = ({ entries }: { entries: ColorEntries | MonoChromeEntry[] }) =>
+const Rows = ({
+  entries,
+}: {
+  entries: colors.ColorEntries | colors.MonoChromeEntry[];
+}) =>
   Object.entries(entries).map(
-    ([clrName, clrVals]: [string, ColorEntry | MonoChromeEntry]) => (
+    ([clrName, clrVals]: [
+      string,
+      colors.ColorEntry | colors.MonoChromeEntry,
+    ]) => (
       <tr>
         <Td>{capitalize(clrName)}</Td>
         {Object.values(clrVals).map((clrVal) => {
           const [{ colorFormat }] = useContext(SettingsContext);
 
           const color = clrVal[colorFormat];
-          const colorStr = colorToString.get(colorFormat)!(color);
+          const colorStr = color.toString();
 
           return (
             <Td
