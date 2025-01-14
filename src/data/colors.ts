@@ -1,3 +1,6 @@
+import { useContext } from "solid-js";
+import { SettingsContext } from "../contexts/SettingsContext";
+
 export type RGB = {
   r: number;
   g: number;
@@ -10,7 +13,10 @@ export type HSL = {
   l: number;
 };
 
-export const rgbToString = (rgb: RGB) => `rgb(${rgb.r}, ${rgb.b}, ${rgb.b})`;
+export const rgbToString = (rgb: RGB) => {
+  const [{ separator }] = useContext(SettingsContext);
+  return `rgb(${rgb.r}${separator} ${rgb.b}${separator} ${rgb.b})`;
+};
 
 type HSLtoStringParams = {
   roundFloats?: boolean;
