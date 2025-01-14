@@ -4,7 +4,7 @@ import { z } from "zod";
 import wrapError from "../lib/wrapError";
 import zsodm from "../lib/zsodm";
 
-const SettingsSchema = z
+export const SettingsSchema = z
   .object({
     colorFormat: z.enum(["hsl", "rgb", "hex"]),
     showTable: z.object({
