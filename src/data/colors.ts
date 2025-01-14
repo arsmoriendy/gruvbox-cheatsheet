@@ -31,10 +31,12 @@ export const Stringify = (c: Color): string => {
     const [{ separator, usePercent, roundFloats }] =
       useContext(SettingsContext);
     const cPercent = (x: number) => {
-      const xp = (x / 255) * 100;
-      return usePercent
-        ? `${roundFloats ? Math.round(xp) : xp.toFixed(1)}%`
-        : x;
+      if (usePercent) {
+        const xp = (x / 255) * 100;
+        return `${roundFloats ? Math.round(xp) : xp.toFixed(1)}%`;
+      }
+
+      return x;
     };
 
     return `rgb(${cPercent(c.r)}${separator}${cPercent(c.g)}${separator}${cPercent(c.b)})`;
