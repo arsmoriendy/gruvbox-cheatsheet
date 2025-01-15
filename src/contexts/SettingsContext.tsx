@@ -20,6 +20,9 @@ export const SettingsSchema = z
     separator: z
       .enum([" ", ", "])
       .describe("Which color values separator to use"),
+    theme: z
+      .enum(["light", "dark", "system"])
+      .describe("Which color scheme to use for this website"),
   })
   .default({
     colorFormat: "hsl",
@@ -30,6 +33,7 @@ export const SettingsSchema = z
     roundFloats: false,
     usePercent: true,
     separator: ", ",
+    theme: "system",
   });
 
 export type Settings = z.infer<typeof SettingsSchema>;
