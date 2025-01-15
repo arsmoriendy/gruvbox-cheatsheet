@@ -160,6 +160,28 @@ const SettingsContent = () => {
           }
         />
       </SettingsEntry>
+
+      <SettingsEntry name="theme">
+        <Select
+          id="theme"
+          disallowEmptySelection
+          value={settings.theme}
+          options={SettingsSchema._def.innerType.shape.theme._def.values}
+          onChange={(format) => setSettings("theme", format!)}
+          itemComponent={(props) => (
+            <SelectItem item={props.item}>
+              {capitalize(props.item.rawValue)}
+            </SelectItem>
+          )}
+        >
+          <SelectTrigger aria-label="Theme">
+            <SelectValue<string>>
+              {(state) => capitalize(state.selectedOption())}
+            </SelectValue>
+          </SelectTrigger>
+          <SelectContent />
+        </Select>
+      </SettingsEntry>
     </>
   );
 };
