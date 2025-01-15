@@ -34,6 +34,8 @@ export const SettingsSchema = z
 
 export type Settings = z.infer<typeof SettingsSchema>;
 
+export const SettingsSchemaShape = SettingsSchema._def.innerType.shape;
+
 const lsKey = "gruvboxCheatsheetSettings";
 
 const parseLs = (): Settings => {
