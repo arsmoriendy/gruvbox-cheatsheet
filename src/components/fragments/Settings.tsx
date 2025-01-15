@@ -3,6 +3,7 @@ import {
   Settings,
   SettingsContext,
   SettingsSchema,
+  SettingsSchemaShape,
 } from "../../contexts/SettingsContext";
 import capitalize from "../../lib/capitalize";
 import { Checkbox } from "../elements/checkbox";
@@ -22,7 +23,8 @@ export default () => {
   return (
     <Popover>
       <PopoverTrigger as={SettingsTriggerButton} />
-      <PopoverContent class="flex flex-col gap-5">
+      <PopoverContent class="flex flex-col gap-1.5 px-0 pt-0 pb-1.5">
+        <b class="p-3 border-b">Settings</b>
         <SettingsContent />
       </PopoverContent>
     </Popover>
@@ -35,16 +37,30 @@ const SettingsTriggerButton = (props: ButtonProps) => (
   </Button>
 );
 
-type SettingsLabelProps = { inputId: string; children: JSXElement };
+type SettingsEntryProps = {
+  name: string;
+  description?: string;
+  id?: string;
+  children: JSXElement;
+};
 
-const SettingsLabel = ({ inputId, children }: SettingsLabelProps) => (
-  <Label for={`${inputId}-input`}>{children}</Label>
-);
-
-type SettingsEntryProps = { children: JSXElement };
-
-const SettingsEntry = ({ children }: SettingsEntryProps) => (
-  <div class="flex justify-between items-center">{children}</div>
+const SettingsEntry = ({
+  name,
+  description,
+  id,
+  children,
+}: SettingsEntryProps) => (
+  <div class="flex justify-between items-center gap-5 hover:bg-muted p-3">
+    <Label for={`${id ?? name}-input`}>
+      <code class="font-bold">{name}</code>
+      <p class="text-muted-foreground">
+        {description ??
+          SettingsSchemaShape[name as keyof typeof SettingsSchemaShape]
+            ?.description}
+      </p>
+    </Label>
+    {children}
+  </div>
 );
 
 const SettingsContent = () => {
@@ -68,28 +84,19 @@ const SettingsContent = () => {
     );
   });
 
-  const ids = {
-    usePercent: "usePercentCheckbox",
-    colorFormat: "colorFormatSelect",
-    roundFloats: "roundFloatsCheckbox",
-    separator: "separatorSelect",
-  };
-
   return (
     <>
-      <SettingsEntry>
-        <SettingsLabel inputId={ids.usePercent}>Use Percent</SettingsLabel>
+      <SettingsEntry name="usePercent">
         <Checkbox
-          id={ids.usePercent}
+          id="usePercent"
           checked={settings.usePercent}
           onChange={() => setSettings("usePercent", !settings.usePercent)}
         />
       </SettingsEntry>
 
-      <SettingsEntry>
-        <SettingsLabel inputId={ids.colorFormat}>Color Format</SettingsLabel>
+      <SettingsEntry name="colorFormat">
         <Select
-          id={ids.colorFormat}
+          id="colorFormat"
           disallowEmptySelection
           value={settings.colorFormat}
           options={SettingsSchema._def.innerType.shape.colorFormat._def.values}
@@ -110,12 +117,16 @@ const SettingsContent = () => {
       </SettingsEntry>
 
       {Object.entries(settings.showTable).map(([tblName, showTbl]) => {
-        const id = `${tblName}TableCheckbox`;
+        const id = `show${capitalize(tblName)}Table`;
         return (
-          <SettingsEntry>
-            <SettingsLabel inputId={id}>
-              {capitalize(tblName)} Table
-            </SettingsLabel>
+          <SettingsEntry
+            name={id}
+            description={
+              SettingsSchemaShape.showTable.shape[
+                tblName as keyof typeof SettingsSchemaShape.showTable.shape
+              ].description
+            }
+          >
             <Checkbox
               id={id}
               checked={showTbl}
@@ -132,19 +143,17 @@ const SettingsContent = () => {
         );
       })}
 
-      <SettingsEntry>
-        <SettingsLabel inputId={ids.roundFloats}>Round Floats</SettingsLabel>
+      <SettingsEntry name="roundFloats">
         <Checkbox
-          id={ids.roundFloats}
+          id="roundFloats"
           checked={settings.roundFloats}
           onChange={() => setSettings("roundFloats", !settings.roundFloats)}
         />
       </SettingsEntry>
 
-      <SettingsEntry>
-        <SettingsLabel inputId={ids.separator}>Space Separators</SettingsLabel>
+      <SettingsEntry name="separator">
         <Checkbox
-          id={ids.separator}
+          id="separator"
           checked={settings.separator == " "}
           onChange={() =>
             setSettings("separator", settings.separator === " " ? ", " : " ")
