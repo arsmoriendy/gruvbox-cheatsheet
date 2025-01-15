@@ -14,8 +14,7 @@
       }
 
       function isSystemDark() {
-        const { matches } = window.matchMedia("(prefers-color-scheme:dark)");
-        return matches;
+        return window.matchMedia("(prefers-color-scheme:dark)").matches;
       }
 
       isSystemDark() && darken();
