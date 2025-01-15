@@ -6,14 +6,20 @@ import zsodm from "../lib/zsodm";
 
 export const SettingsSchema = z
   .object({
-    colorFormat: z.enum(["hsl", "rgb", "hex"]),
-    showTable: z.object({
-      dark: z.boolean(),
-      light: z.boolean(),
-    }),
-    roundFloats: z.boolean(),
-    usePercent: z.boolean(),
-    separator: z.enum([" ", ", "]),
+    colorFormat: z
+      .enum(["hsl", "rgb", "hex"])
+      .describe("The color format for each cell color"),
+    showTable: z
+      .object({
+        dark: z.boolean().describe("Show dark color scheme table"),
+        light: z.boolean().describe("Show light color scheme table"),
+      })
+      .describe("Which color scheme table(s) to show"),
+    roundFloats: z.boolean().describe("Wether or not to round floats"),
+    usePercent: z.boolean().describe("Wether or not to use pecentage values"),
+    separator: z
+      .enum([" ", ", "])
+      .describe("Which color values separator to use"),
   })
   .default({
     colorFormat: "hsl",
