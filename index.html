@@ -17,7 +17,20 @@
         return window.matchMedia("(prefers-color-scheme:dark)").matches;
       }
 
-      isSystemDark() && darken();
+      let userPrefDark;
+      try {
+        const userPref = JSON.parse(localStorage["gruvboxCheatsheetSettings"])[
+          "theme"
+        ];
+        if (userPref === "dark") {
+          userPrefDark = true;
+        } else if (userPref === "light") {
+          userPrefDark = false;
+        }
+      } catch {}
+
+      userPrefDark && darken();
+      userPrefDark === undefined && isSystemDark() && darken();
     </script>
   </head>
   <body class="min-h-screen">
