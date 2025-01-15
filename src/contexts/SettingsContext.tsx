@@ -62,6 +62,34 @@ createEffect(() => {
   localStorage[lsKey] = JSON.stringify(settingsStore[0]);
 });
 
+namespace theme {
+  const htmlClasses = document.documentElement.classList;
+  export const lighten = () => {
+    htmlClasses.remove("dark");
+  };
+  export const darken = () => {
+    htmlClasses.contains("dark") || htmlClasses.add("dark");
+  };
+  export function isSystemDark() {
+    const { matches } = window.matchMedia("(prefers-color-scheme:dark)");
+    return matches;
+  }
+}
+
+createEffect(() => {
+  switch (settingsStore[0].theme) {
+    case "dark":
+      theme.darken();
+      return;
+    case "light":
+      theme.lighten();
+      return;
+    case "system":
+      theme.isSystemDark() ? theme.darken() : theme.lighten();
+      return;
+  }
+});
+
 export const SettingsContext = createContext(settingsStore);
 export const SettingsContextProvider = ({
   children,
