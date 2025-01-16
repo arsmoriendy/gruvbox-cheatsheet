@@ -18,10 +18,11 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from "../elements/popover";
 import { Button, ButtonProps } from "../elements/button";
 import Cog from "lucide-solid/icons/cog";
+import { PopoverRootProps } from "@kobalte/core/popover";
 
-export default () => {
+export default (props: PopoverRootProps) => {
   return (
-    <Popover>
+    <Popover {...props}>
       <PopoverTrigger as={SettingsTriggerButton} />
       <PopoverContent class="flex flex-col gap-1.5 px-0 pt-0 pb-1.5">
         <b class="p-3 border-b">Settings</b>
