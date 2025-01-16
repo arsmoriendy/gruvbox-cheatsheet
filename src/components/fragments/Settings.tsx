@@ -22,7 +22,7 @@ import { PopoverRootProps } from "@kobalte/core/popover";
 
 export default (props: PopoverRootProps) => {
   return (
-    <Popover {...props}>
+    <Popover placement="bottom-end" {...props}>
       <PopoverTrigger as={SettingsTriggerButton} />
       <PopoverContent class="flex flex-col gap-1.5 px-0 pt-0 pb-1.5">
         <b class="p-3 border-b">Settings</b>
