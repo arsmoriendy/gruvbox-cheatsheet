@@ -16,12 +16,8 @@ export const ColorTables = () => {
     !settings.ignoreToasts.cellCopy &&
       showToast((toastId) => {
         return {
-          title: (
-            <div class="flex items-center gap-2">
-              <Lightbulb class="size-4 text-info" />
-              Tip
-            </div>
-          ),
+          icon: <Lightbulb class="size-4 text-info" />,
+          title: "Tip",
           description: (
             <>
               <p class="my-2">Click on any color cell to copy its value</p>

@@ -142,6 +142,7 @@ const ToastDescription = <T extends ValidComponent = "div">(
 function showToast(
   props: (toastId: number) => {
     title?: JSX.Element;
+    icon?: JSX.Element;
     description?: JSX.Element;
     variant?: ToastVariant;
     duration?: number;
@@ -150,7 +151,7 @@ function showToast(
   ToastPrimitive.toaster.show((data) => {
     const computedProps = props(data.toastId);
     const [{ toastId }, otherProps] = splitProps(computedProps, ["toastId"]);
-    const { persistent, title, description } = otherProps;
+    const { persistent, title, description, icon } = otherProps;
 
     return (
       <Toast
@@ -159,7 +160,12 @@ function showToast(
         {...otherProps}
       >
         <div class="grid gap-1">
-          {title && <ToastTitle>{title}</ToastTitle>}
+          {title && (
+            <ToastTitle class="flex items-center gap-2">
+              {icon}
+              {title}
+            </ToastTitle>
+          )}
           {description && <ToastDescription>{description}</ToastDescription>}
         </div>
         <ToastClose />
