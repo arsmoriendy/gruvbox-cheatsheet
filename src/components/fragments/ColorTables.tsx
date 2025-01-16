@@ -1,13 +1,45 @@
-import { createEffect, createSignal, JSX, useContext } from "solid-js";
+import { createEffect, createSignal, JSX, onMount, useContext } from "solid-js";
 import { SettingsContext } from "../../contexts/SettingsContext";
 import * as colors from "../../data/colors";
 import capitalize from "../../lib/capitalize";
 import Copy from "lucide-solid/icons/copy";
 import ClipboardCheck from "lucide-solid/icons/clipboard-check";
 import { Button } from "../elements/button";
+import { showToast } from "../elements/toast";
+import Lightbulb from "lucide-solid/icons/lightbulb";
+import { toaster } from "@kobalte/core";
 
 export const ColorTables = () => {
-  const [settings] = useContext(SettingsContext);
+  const [settings, setSettings] = useContext(SettingsContext);
+
+  onMount(() => {
+    !settings.ignoreToasts.cellCopy &&
+      showToast((toastId) => {
+        return {
+          title: (
+            <div class="flex items-center gap-2">
+              <Lightbulb class="size-4 text-info" />
+              Tip
+            </div>
+          ),
+          description: (
+            <>
+              <p class="my-2">Click on any color cell to copy its value</p>
+              <Button
+                variant="outline"
+                size="sm"
+                onclick={() => {
+                  toaster.dismiss(toastId);
+                  setSettings("ignoreToasts", "cellCopy", true);
+                }}
+              >
+                Hide Forever
+              </Button>
+            </>
+          ),
+        };
+      });
+  });
 
   return (
     <div class="flex flex-col gap-2 xl:flex-row xl:justify-between">

@@ -23,6 +23,9 @@ export const SettingsSchema = z
     theme: z
       .enum(["light", "dark", "system"])
       .describe("Which color scheme to use for this website"),
+    ignoreToasts: z.object({
+      cellCopy: z.boolean(),
+    }),
   })
   .default({
     colorFormat: "hsl",
@@ -34,6 +37,9 @@ export const SettingsSchema = z
     usePercent: true,
     separator: ", ",
     theme: "system",
+    ignoreToasts: {
+      cellCopy: false,
+    },
   });
 
 export type Settings = z.infer<typeof SettingsSchema>;

@@ -2,6 +2,7 @@ import type { Component } from "solid-js";
 import { SettingsContextProvider } from "./contexts/SettingsContext";
 import { ColorTables } from "./components/fragments/ColorTables";
 import Settings from "./components/fragments/Settings";
+import { Toaster } from "./components/elements/toast";
 
 const App: Component = () => {
   return (
@@ -12,6 +13,7 @@ const App: Component = () => {
           <Settings />
         </header>
         <ColorTables />
+        <Toaster />
       </div>
     </SettingsContextProvider>
   );
