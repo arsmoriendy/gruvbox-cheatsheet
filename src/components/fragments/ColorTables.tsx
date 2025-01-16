@@ -10,7 +10,7 @@ export const ColorTables = () => {
   const [settings] = useContext(SettingsContext);
 
   return (
-    <div class="flex flex-col gap-2 lg:flex-row lg:justify-between">
+    <div class="flex flex-col gap-2 xl:flex-row xl:justify-between">
       {Object.entries(settings.showTable).map(
         ([tblName, showTbl]) =>
           showTbl && (
@@ -93,7 +93,7 @@ const Rows = ({
                     ? "hsl(48 87% 88%)"
                     : "hsl(0 0% 16%)",
               }}
-              class="relative group py-2"
+              class="relative font-mono group py-2"
             >
               {colorStr}
               <CopyBtn value={colorStr} />
