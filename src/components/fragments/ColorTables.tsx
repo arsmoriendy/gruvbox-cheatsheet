@@ -10,7 +10,7 @@ export const ColorTables = () => {
   const [settings] = useContext(SettingsContext);
 
   return (
-    <div class="flex flex-col lg:flex-row gap-5 items-center lg:justify-evenly m-5">
+    <div class="flex flex-col gap-2 xl:flex-row xl:justify-between">
       {Object.entries(settings.showTable).map(
         ([tblName, showTbl]) =>
           showTbl && (
@@ -42,7 +42,7 @@ const ColorTable = ({
   name: string;
   scheme: colors.ColorScheme;
 }) => (
-  <table class={`border-collapse ${borderClass}`} {...props}>
+  <table class={`border-collapse grow ${borderClass}`} {...props}>
     <thead>
       <tr>
         <Th colspan={3}>{name}</Th>
