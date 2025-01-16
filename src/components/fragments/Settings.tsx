@@ -153,13 +153,33 @@ const SettingsContent = () => {
       </SettingsEntry>
 
       <SettingsEntry name="separator">
-        <Checkbox
+        <Select
           id="separator"
-          checked={settings.separator == " "}
-          onChange={() =>
-            setSettings("separator", settings.separator === " " ? ", " : " ")
-          }
-        />
+          disallowEmptySelection
+          value={{
+            label: settings.separator === ", " ? "Comma" : "Space",
+            value: settings.separator,
+          }}
+          options={[
+            { label: "Comma", value: ", " },
+            { label: "Space", value: " " },
+          ]}
+          optionValue="value"
+          optionTextValue="label"
+          onChange={(format) => setSettings("separator", format!.value)}
+          itemComponent={(props) => (
+            <SelectItem item={props.item}>
+              {props.item.rawValue.label}
+            </SelectItem>
+          )}
+        >
+          <SelectTrigger aria-label="Theme">
+            <SelectValue<{ label: string }>>
+              {(state) => state.selectedOption().label}
+            </SelectValue>
+          </SelectTrigger>
+          <SelectContent />
+        </Select>
       </SettingsEntry>
 
       <SettingsEntry name="theme">
