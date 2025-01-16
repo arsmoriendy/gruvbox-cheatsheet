@@ -19,7 +19,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
       - run: npm i
-      - run: npm run build
+      - run: npm run build -- --base=gruvbox-cheatsheet
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
