@@ -24,7 +24,7 @@ export default (props: PopoverRootProps) => {
   return (
     <Popover placement="bottom-end" {...props}>
       <PopoverTrigger as={SettingsTriggerButton} />
-      <PopoverContent class="flex flex-col gap-1.5 px-0 pt-0 pb-1.5">
+      <PopoverContent class="flex flex-col gap-1.5 px-0 pt-0 pb-1.5 backdrop-blur bg-background/85">
         <b class="p-3 border-b">Settings</b>
         <SettingsContent />
       </PopoverContent>
@@ -51,7 +51,7 @@ const SettingsEntry = ({
   id,
   children,
 }: SettingsEntryProps) => (
-  <div class="flex justify-between items-center gap-5 hover:bg-muted p-3">
+  <div class="flex justify-between items-center gap-5 p-3">
     <Label for={`${id ?? name}-input`}>
       <code class="font-bold">{name}</code>
       <p class="text-muted-foreground">
