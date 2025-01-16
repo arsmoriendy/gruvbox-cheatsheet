@@ -98,6 +98,12 @@ export default {
         "content-hide": "content-hide 0.2s ease-out",
         "caret-blink": "caret-blink 1.25s ease-out infinite",
       },
+      fontFamily: {
+        sans: ['"Jost Variable"'],
+        serif: ['"Lora Variable"'],
+        display: "Gloock",
+        mono: ['"Fira Code Variable"'],
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],

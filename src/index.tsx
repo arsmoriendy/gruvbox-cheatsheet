@@ -3,6 +3,10 @@ import { render } from "solid-js/web";
 
 import "./index.css";
 import App from "./App";
+import "@fontsource/gloock";
+import "@fontsource-variable/jost";
+import "@fontsource-variable/fira-code";
+import "@fontsource-variable/lora";
 
 const root = document.getElementById("root");
 

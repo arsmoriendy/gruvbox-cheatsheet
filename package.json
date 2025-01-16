@@ -25,6 +25,10 @@
     "vitest": "^2.1.8"
   },
   "dependencies": {
+    "@fontsource-variable/fira-code": "^5.1.1",
+    "@fontsource-variable/jost": "^5.1.2",
+    "@fontsource-variable/lora": "^5.1.1",
+    "@fontsource/gloock": "^5.1.1",
     "@kobalte/core": "^0.13.7",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
