@@ -13,7 +13,8 @@ const zsodm = <S extends z.SomeZodObject>(
 
     // recursively run this function on object types
     if (zType instanceof z.ZodObject) {
-      retObj[k] = zsodm(srcVal, defObj[k], zType);
+      retObj[k] =
+        srcVal === undefined ? defObj[k] : zsodm(srcVal, defObj[k], zType);
       return;
     }
 

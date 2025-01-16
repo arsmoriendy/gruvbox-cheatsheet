@@ -57,3 +57,21 @@ test("Different object shape, different strField value", () => {
     arrField: [1, 2, 3],
   });
 });
+
+test("Different object shape, missing objField", () => {
+  const testObj = {
+    arrField: [1, 2, 3],
+  };
+
+  const res = zsodm(testObj, TestSchema);
+
+  TestSchema.parse(res);
+
+  expect(res).toStrictEqual({
+    objField: {
+      strField: "strVal",
+      undefinedField: undefined,
+    },
+    arrField: [1, 2, 3],
+  });
+});
