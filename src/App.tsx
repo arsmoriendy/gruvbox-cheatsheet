@@ -6,6 +6,11 @@ import { Toaster } from "./components/elements/toast";
 import { Button } from "./components/elements/button";
 import Bug from "lucide-solid/icons/bug";
 import Github from "lucide-solid/icons/github";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "./components/elements/tooltip";
 
 const App: Component = () => {
   return (
@@ -14,23 +19,40 @@ const App: Component = () => {
         <header class="flex items-center justify-between my-2">
           <h1 class="font-bold text-xl">Gruvbox Cheatsheet</h1>
           <div class="flex gap-2">
-            <Button
-              size="icon"
-              variant="outline"
-              as="a"
-              href="https://github.com/arsmoriendy/gruvbox-cheatsheet"
-            >
-              <Github />
-            </Button>
-            <Button
-              size="icon"
-              variant="outline"
-              as="a"
-              href="https://github.com/arsmoriendy/gruvbox-cheatsheet/issues"
-            >
-              <Bug />
-            </Button>
-            <Settings />
+            <Tooltip>
+              <TooltipTrigger>
+                <Button
+                  size="icon"
+                  variant="outline"
+                  as="a"
+                  href="https://github.com/arsmoriendy/gruvbox-cheatsheet"
+                >
+                  <Github />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>GitHub Repository</TooltipContent>
+            </Tooltip>
+
+            <Tooltip>
+              <TooltipTrigger>
+                <Button
+                  size="icon"
+                  variant="outline"
+                  as="a"
+                  href="https://github.com/arsmoriendy/gruvbox-cheatsheet/issues"
+                >
+                  <Bug />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>Report a Bug</TooltipContent>
+            </Tooltip>
+
+            <Tooltip>
+              <TooltipTrigger>
+                <Settings />
+              </TooltipTrigger>
+              <TooltipContent>Settings</TooltipContent>
+            </Tooltip>
           </div>
         </header>
         <ColorTables />
