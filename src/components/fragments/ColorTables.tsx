@@ -31,7 +31,7 @@ const Th = ({ class: className, ...props }: JSX.IntrinsicElements["th"]) => (
 );
 
 const Td = ({ class: className, ...props }: JSX.IntrinsicElements["td"]) => (
-  <td class={`${borderClass} ${className}`} {...props} />
+  <td class={`${borderClass} px-2 ${className}`} {...props} />
 );
 
 const ColorTable = ({
