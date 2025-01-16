@@ -1,13 +1,12 @@
-import { createEffect, createSignal, JSX, onMount, useContext } from "solid-js";
+import { JSX, onMount, useContext } from "solid-js";
 import { SettingsContext } from "../../contexts/SettingsContext";
 import * as colors from "../../data/colors";
 import capitalize from "../../lib/capitalize";
-import Copy from "lucide-solid/icons/copy";
-import ClipboardCheck from "lucide-solid/icons/clipboard-check";
 import { Button } from "../elements/button";
 import { showToast } from "../elements/toast";
 import Lightbulb from "lucide-solid/icons/lightbulb";
 import { toaster } from "@kobalte/core";
+import ClipboardCheck from "lucide-solid/icons/clipboard-check";
 
 export const ColorTables = () => {
   const [settings, setSettings] = useContext(SettingsContext);
@@ -111,45 +110,36 @@ const Rows = ({
 
           const color = clrVal[colorFormat];
           const colorStr = colors.Stringify(color);
+          const textColor =
+            clrVal.hsl.s < 20 || clrVal.hsl.l < 50
+              ? "hsl(48 87% 88%)"
+              : "hsl(0 0% 16%)";
 
           return (
             <Td
               style={{
                 "background-color": clrVal.hex,
-                color:
-                  clrVal.hsl.s < 20 || clrVal.hsl.l < 50
-                    ? "hsl(48 87% 88%)"
-                    : "hsl(0 0% 16%)",
+                color: textColor,
               }}
-              class="relative font-mono group py-2"
+              class="relative font-mono py-2 cursor-pointer hover:z-50 hover:scale-110"
+              onclick={() => {
+                navigator.clipboard.writeText(colorStr);
+                showToast(() => ({
+                  icon: <ClipboardCheck class="size-4" />,
+                  title: <>Copied to clipboard</>,
+                  style: {
+                    "background-color": clrVal.hex,
+                    color: textColor,
+                    "border-color": textColor,
+                  },
+                  class: "border",
+                }));
+              }}
             >
               {colorStr}
-              <CopyBtn value={colorStr} />
             </Td>
           );
         })}
       </tr>
     ),
   );
-
-const CopyBtn = ({ value }: { value: string }) => {
-  const [copied, setCopied] = createSignal(false);
-
-  createEffect(() => {
-    copied() && setTimeout(() => setCopied(false), 1000);
-  });
-
-  return (
-    <Button
-      size="icon"
-      variant="outline"
-      onclick={() => {
-        setCopied(true);
-        navigator.clipboard.writeText(value);
-      }}
-      class="opacity-0 group-hover:opacity-100 absolute right-1 top-1/2 -translate-y-1/2 bg-background text-foreground size-7"
-    >
-      {copied() ? <ClipboardCheck /> : <Copy />}
-    </Button>
-  );
-};
