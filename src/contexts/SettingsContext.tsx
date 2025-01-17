@@ -23,6 +23,11 @@ export const SettingsSchema = z
     theme: z
       .enum(["light", "dark", "system"])
       .describe("Which color scheme to use for this website"),
+    darkMode: z
+      .boolean()
+      .describe(
+        "Wether or not this website is in dark mode, accounting for system theme",
+      ),
     ignoreToasts: z.object({
       cellCopy: z.boolean(),
     }),
@@ -40,6 +45,7 @@ export const SettingsSchema = z
     ignoreToasts: {
       cellCopy: false,
     },
+    darkMode: false,
   });
 
 export type Settings = z.infer<typeof SettingsSchema>;
@@ -85,16 +91,22 @@ namespace theme {
 createEffect(() => {
   switch (settingsStore[0].theme) {
     case "dark":
-      theme.darken();
-      return;
+      settingsStore[1]("darkMode", true);
+      break;
     case "light":
-      theme.lighten();
-      return;
+      settingsStore[1]("darkMode", false);
+      break;
     case "system":
-      theme.isSystemDark() ? theme.darken() : theme.lighten();
-      return;
+      theme.isSystemDark()
+        ? settingsStore[1]("darkMode", true)
+        : settingsStore[1]("darkMode", false);
+      break;
   }
 });
+
+createEffect(() =>
+  settingsStore[0].darkMode ? theme.darken() : theme.lighten(),
+);
 
 export const SettingsContext = createContext(settingsStore);
 export const SettingsContextProvider = ({
