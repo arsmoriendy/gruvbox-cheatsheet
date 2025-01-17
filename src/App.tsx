@@ -11,6 +11,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "./components/elements/tooltip";
+import CopyDialog from "./components/fragments/CopyDialog";
 
 const App: Component = () => {
   return (
@@ -19,6 +20,8 @@ const App: Component = () => {
         <header class="flex items-center justify-between my-2">
           <h1 class="font-bold text-xl">Gruvbox Cheatsheet</h1>
           <div class="flex gap-2">
+            <CopyDialog />
+
             <Tooltip>
               <TooltipTrigger
                 as={(props: ButtonProps<"a">) => (
