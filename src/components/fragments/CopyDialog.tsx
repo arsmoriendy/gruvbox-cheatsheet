@@ -10,6 +10,11 @@ import { Colors } from "~/data/colors";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../elements/tooltip";
 import { Button, ButtonProps } from "../elements/button";
 import Braces from "lucide-solid/icons/braces";
+import { highlightJson } from "~/lib/highlighter";
+import Copy from "lucide-solid/icons/copy";
+import { SettingsContext } from "~/contexts/SettingsContext";
+import { createSignal, useContext } from "solid-js";
+import ClipboardCheck from "lucide-solid/icons/clipboard-check";
 
 export default () => {
   return (
@@ -41,8 +46,21 @@ const CopyTriggerButton = (props: ButtonProps) => (
 );
 
 const CopyContent = () => {
+  const jsonString = JSON.stringify(Colors, null, 4);
+  const [settings] = useContext(SettingsContext);
+  const [copied, setCopied] = createSignal(false);
+
+  const stylePre = (div: HTMLDivElement) => {
+    const observer = new MutationObserver(() => {
+      const pre = div.querySelector("pre");
+      pre?.classList.add("p-2");
+    });
+
+    observer.observe(div, { childList: true });
+  };
+
   return (
-    <DialogContent>
+    <DialogContent class="max-w-lg max-h-[calc(100vh-16rem)]">
       <DialogHeader>
         <DialogTitle>Copy JSON</DialogTitle>
         <DialogDescription>
@@ -50,7 +68,34 @@ const CopyContent = () => {
         </DialogDescription>
       </DialogHeader>
 
-      <code>{JSON.stringify(Colors)}</code>
+      <div class="relative">
+        <Button
+          size="sm"
+          class="top-2 right-2 absolute"
+          onclick={() => {
+            setCopied(true);
+            navigator.clipboard.writeText(jsonString);
+          }}
+        >
+          {copied() ? (
+            <>
+              <ClipboardCheck /> Copied!
+            </>
+          ) : (
+            <>
+              <Copy /> Copy
+            </>
+          )}
+        </Button>
+        <div
+          ref={stylePre}
+          innerHTML={highlightJson(jsonString, {
+            theme: settings.darkMode
+              ? "Gruvbox Dark Medium"
+              : "Gruvbox Light Medium",
+          })}
+        />
+      </div>
     </DialogContent>
   );
 };
