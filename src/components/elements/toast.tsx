@@ -8,6 +8,7 @@ import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
 
 import { cn } from "~/lib/utils";
+import { LucideProps } from "lucide-solid";
 
 const toastVariants = cva(
   "group pointer-events-auto relative flex w-full items-center justify-between space-x-4 overflow-hidden rounded-md border p-4 pr-8 shadow-lg transition-all data-[swipe=cancel]:translate-x-0 data-[swipe=end]:translate-x-[var(--kb-toast-swipe-end-x)] data-[swipe=move]:translate-x-[var(--kb-toast-swipe-move-x)] data-[swipe=move]:transition-none data-[opened]:animate-in data-[closed]:animate-out data-[swipe=end]:animate-out data-[closed]:fade-out-80 data-[closed]:slide-out-to-right-full data-[opened]:slide-in-from-top-full data-[opened]:sm:slide-in-from-bottom-full backdrop-blur",
@@ -142,7 +143,7 @@ const ToastDescription = <T extends ValidComponent = "div">(
 function showToast(
   getProps: (toastId: number) => {
     title?: JSX.Element;
-    icon?: JSX.Element;
+    icon?: (iconProps: LucideProps) => JSX.Element;
     description?: JSX.Element;
     variant?: ToastVariant;
     duration?: number;
@@ -163,7 +164,7 @@ function showToast(
         <div class="grid gap-1">
           {title && (
             <ToastTitle class="flex items-center gap-2">
-              {icon}
+              {icon?.({ size: 16 })}
               {title}
             </ToastTitle>
           )}

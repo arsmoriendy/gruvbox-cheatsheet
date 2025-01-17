@@ -15,7 +15,7 @@ export const ColorTables = () => {
     !settings.ignoreToasts.cellCopy &&
       showToast((toastId) => {
         return {
-          icon: <Lightbulb class="size-4 text-info" />,
+          icon: (iconProps) => <Lightbulb class="text-info" {...iconProps} />,
           title: "Tip",
           description: (
             <>
@@ -125,7 +125,7 @@ const Rows = ({
               onclick={() => {
                 navigator.clipboard.writeText(colorStr);
                 showToast(() => ({
-                  icon: <ClipboardCheck class="size-4" />,
+                  icon: (iconProps) => <ClipboardCheck {...iconProps} />,
                   title: <>Copied to clipboard</>,
                   style: {
                     "background-color": clrVal.hex,
