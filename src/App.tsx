@@ -3,7 +3,7 @@ import { SettingsContextProvider } from "./contexts/SettingsContext";
 import { ColorTables } from "./components/fragments/ColorTables";
 import Settings from "./components/fragments/Settings";
 import { Toaster } from "./components/elements/toast";
-import { Button } from "./components/elements/button";
+import { Button, ButtonProps } from "./components/elements/button";
 import Bug from "lucide-solid/icons/bug";
 import Github from "lucide-solid/icons/github";
 import {
@@ -20,37 +20,41 @@ const App: Component = () => {
           <h1 class="font-bold text-xl">Gruvbox Cheatsheet</h1>
           <div class="flex gap-2">
             <Tooltip>
-              <TooltipTrigger>
-                <Button
-                  size="icon"
-                  variant="outline"
-                  as="a"
-                  href="https://github.com/arsmoriendy/gruvbox-cheatsheet"
-                >
-                  <Github />
-                </Button>
-              </TooltipTrigger>
+              <TooltipTrigger
+                as={(props: ButtonProps<"a">) => (
+                  <Button
+                    size="icon"
+                    variant="outline"
+                    as="a"
+                    href="https://github.com/arsmoriendy/gruvbox-cheatsheet"
+                    {...props}
+                  >
+                    <Github />
+                  </Button>
+                )}
+              />
               <TooltipContent>GitHub Repository</TooltipContent>
             </Tooltip>
 
             <Tooltip>
-              <TooltipTrigger>
-                <Button
-                  size="icon"
-                  variant="outline"
-                  as="a"
-                  href="https://github.com/arsmoriendy/gruvbox-cheatsheet/issues"
-                >
-                  <Bug />
-                </Button>
-              </TooltipTrigger>
+              <TooltipTrigger
+                as={(props: ButtonProps<"a">) => (
+                  <Button
+                    size="icon"
+                    variant="outline"
+                    as="a"
+                    href="https://github.com/arsmoriendy/gruvbox-cheatsheet/issues"
+                    {...props}
+                  >
+                    <Bug />
+                  </Button>
+                )}
+              />
               <TooltipContent>Report a Bug</TooltipContent>
             </Tooltip>
 
             <Tooltip>
-              <TooltipTrigger>
-                <Settings />
-              </TooltipTrigger>
+              <TooltipTrigger as={Settings} />
               <TooltipContent>Settings</TooltipContent>
             </Tooltip>
           </div>
