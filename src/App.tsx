@@ -53,10 +53,7 @@ const App: Component = () => {
               <TooltipContent>Report a Bug</TooltipContent>
             </Tooltip>
 
-            <Tooltip>
-              <TooltipTrigger as={Settings} />
-              <TooltipContent>Settings</TooltipContent>
-            </Tooltip>
+            <Settings />
           </div>
         </header>
         <ColorTables />
