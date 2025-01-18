@@ -5,13 +5,13 @@ import Settings from "./components/fragments/Settings";
 import { Toaster } from "./components/elements/toast";
 import { Button, ButtonProps } from "./components/elements/button";
 import Bug from "lucide-solid/icons/bug";
-import Github from "lucide-solid/icons/github";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from "./components/elements/tooltip";
 import CopyDialog from "./components/fragments/CopyDialog";
+import { GithubButton } from "./components/fragments/GithubButton";
 
 const App: Component = () => {
   return (
@@ -22,22 +22,7 @@ const App: Component = () => {
           <div class="flex gap-2">
             <CopyDialog />
 
-            <Tooltip>
-              <TooltipTrigger
-                as={(props: ButtonProps<"a">) => (
-                  <Button
-                    size="icon"
-                    variant="outline"
-                    as="a"
-                    href="https://github.com/arsmoriendy/gruvbox-cheatsheet"
-                    {...props}
-                  >
-                    <Github />
-                  </Button>
-                )}
-              />
-              <TooltipContent>GitHub Repository</TooltipContent>
-            </Tooltip>
+            <GithubButton />
 
             <Tooltip>
               <TooltipTrigger
