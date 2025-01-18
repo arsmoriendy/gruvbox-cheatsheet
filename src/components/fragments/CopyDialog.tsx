@@ -51,7 +51,7 @@ const CopyContent = () => {
   const [copied, setCopied] = createSignal(false);
 
   return (
-    <DialogContent class="max-w-lg max-h-[calc(100vh-16rem)]">
+    <DialogContent class="max-w-xl max-h-[calc(100vh-16rem)]">
       <DialogHeader>
         <DialogTitle>Copy JSON</DialogTitle>
         <DialogDescription>
@@ -87,6 +87,21 @@ const CopyContent = () => {
               {
                 pre(this, hast) {
                   hast.properties.class = "p-2";
+                },
+                line(this, hast, line) {
+                  hast.children.unshift({
+                    type: "element",
+                    tagName: "span",
+                    properties: {
+                      class: "text-muted-foreground",
+                    },
+                    children: [
+                      {
+                        type: "text",
+                        value: `${line} `.padStart(4),
+                      },
+                    ],
+                  });
                 },
               },
             ],
