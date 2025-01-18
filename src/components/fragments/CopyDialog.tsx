@@ -51,7 +51,7 @@ const CopyContent = () => {
   const [copied, setCopied] = createSignal(false);
 
   return (
-    <DialogContent class="max-w-xl max-h-[calc(100vh-16rem)]">
+    <DialogContent class="max-w-xl">
       <DialogHeader>
         <DialogTitle>Copy JSON</DialogTitle>
         <DialogDescription>
@@ -86,7 +86,7 @@ const CopyContent = () => {
             transformers: [
               {
                 pre(this, hast) {
-                  hast.properties.class = "p-2";
+                  this.addClassToHast(hast, "p-2 overflow-y-scroll max-h-96");
                 },
                 line(this, hast, line) {
                   hast.children.unshift({
