@@ -50,15 +50,6 @@ const CopyContent = () => {
   const [settings] = useContext(SettingsContext);
   const [copied, setCopied] = createSignal(false);
 
-  const stylePre = (div: HTMLDivElement) => {
-    const observer = new MutationObserver(() => {
-      const pre = div.querySelector("pre");
-      pre?.classList.add("p-2");
-    });
-
-    observer.observe(div, { childList: true });
-  };
-
   return (
     <DialogContent class="max-w-lg max-h-[calc(100vh-16rem)]">
       <DialogHeader>
@@ -88,11 +79,17 @@ const CopyContent = () => {
           )}
         </Button>
         <div
-          ref={stylePre}
           innerHTML={highlightJson(jsonString, {
             theme: settings.darkMode
               ? "Gruvbox Dark Medium"
               : "Gruvbox Light Medium",
+            transformers: [
+              {
+                pre(this, hast) {
+                  hast.properties.class = "p-2";
+                },
+              },
+            ],
           })}
         />
       </div>
