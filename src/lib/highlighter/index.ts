@@ -4,7 +4,7 @@ import {
   createJavaScriptRegexEngine,
 } from "shiki";
 
-const highliter = await createHighlighterCore({
+const highlighter = await createHighlighterCore({
   themes: [import("./dark-gruvbox-theme"), import("./light-gruvbox-theme")],
   langs: [import("@shikijs/langs/json")],
   engine: createJavaScriptRegexEngine(),
@@ -18,10 +18,10 @@ export const highlightJson = (
     }
   >,
 ) =>
-  highliter.codeToHtml(jsonString, {
+  highlighter.codeToHtml(jsonString, {
     lang: "json",
     theme: opts?.theme ?? "Gruvbox Dark Medium",
     ...opts,
   });
 
-export default highliter;
+export default highlighter;
