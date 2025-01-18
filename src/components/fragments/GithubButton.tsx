@@ -5,7 +5,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "../elements/tooltip";
 export const GithubButton = (props: ButtonProps<"a">) => (
   <Tooltip>
     <TooltipTrigger {...props} as={GithubTooltipTriggerButton} />
-    <TooltipContent>GitHub Repository</TooltipContent>
+    <TooltipContent>GitHub Repositories</TooltipContent>
   </Tooltip>
 );
 

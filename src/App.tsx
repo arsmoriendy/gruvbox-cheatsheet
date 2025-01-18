@@ -11,7 +11,7 @@ import {
   TooltipTrigger,
 } from "./components/elements/tooltip";
 import CopyDialog from "./components/fragments/CopyDialog";
-import { GithubButton } from "./components/fragments/GithubButton";
+import { GithubDropdown } from "./components/fragments/GithubDropdown";
 
 const App: Component = () => {
   return (
@@ -22,7 +22,7 @@ const App: Component = () => {
           <div class="flex gap-2">
             <CopyDialog />
 
-            <GithubButton />
+            <GithubDropdown />
 
             <Tooltip>
               <TooltipTrigger
