@@ -6,3 +6,8 @@
 
 Interactive color tables (dark and light) website for the [Gruvbox](https://github.com/morhetz/gruvbox) colorscheme. Supports HSL, RGB and HEX color formats implementing modern and legacy css styles.
 
+### Environment Variables
+
+| Name                | Description                                               |
+| ------------------- | --------------------------------------------------------- |
+| `VITE_GITHUB_TOKEN` | Token used to query various Github APIs (e.g. repo stars) |
