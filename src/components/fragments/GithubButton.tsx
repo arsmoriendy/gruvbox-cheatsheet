@@ -9,14 +9,8 @@ export const GithubButton = (props: ButtonProps<"a">) => (
   </Tooltip>
 );
 
-const GithubTooltipTriggerButton = (props: ButtonProps<"a">) => (
-  <Button
-    size="icon"
-    variant="outline"
-    as="a"
-    href="https://github.com/arsmoriendy/gruvbox-cheatsheet"
-    {...props}
-  >
+const GithubTooltipTriggerButton = (props: ButtonProps) => (
+  <Button size="icon" variant="outline" {...props}>
     <Github />
   </Button>
 );
