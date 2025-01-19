@@ -89,7 +89,7 @@ const RepoItem = ({ user, repo }: RepoItemProps) => {
   return (
     <DropdownMenuItem
       as="a"
-      class="cursor-pointer"
+      class="cursor-pointer group justify-between gap-7"
       href={`https://github.com/${repoPath}`}
     >
       <span class="font-mono">{repoPath}</span>
@@ -101,8 +101,8 @@ const RepoItem = ({ user, repo }: RepoItemProps) => {
 const formatter = Intl.NumberFormat("en", { notation: "compact" });
 
 const RepoStars = (props: { stars?: number }) => (
-  <Badge class="bg-muted text-muted-foreground">
-    <Star size={12} class="text-accent mr-2" />
+  <div class="text-muted-foreground group-hover:text-accent-foreground group-focus:text-accent-foreground flex items-center">
+    <Star size={12} class="mr-2" />
     {props.stars === undefined ? "?" : formatter.format(props.stars)}
-  </Badge>
+  </div>
 );
