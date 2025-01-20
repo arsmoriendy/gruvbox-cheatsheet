@@ -1,5 +1,8 @@
-import { JSX, onMount, useContext } from "solid-js";
-import { SettingsContext } from "../../contexts/SettingsContext";
+import { For, JSX, onMount, useContext } from "solid-js";
+import {
+  SettingsContext,
+  SettingsSchemaShape,
+} from "../../contexts/SettingsContext";
 import * as colors from "../../data/colors";
 import capitalize from "../../lib/capitalize";
 import { Button } from "../elements/button";
@@ -108,6 +111,10 @@ const Rows = ({
         <Td>{capitalize(clrName)}</Td>
         {Object.values(clrVals).map((clrVal) => {
           const [{ colorFormat }] = useContext(SettingsContext);
+          const otherColorFormats: (keyof colors.ColorValues)[] =
+            SettingsSchemaShape.colorFormat._def.values.filter(
+              (fmt) => fmt !== colorFormat,
+            );
 
           const color = clrVal[colorFormat];
           const colorStr = colors.Stringify(color);
@@ -117,8 +124,15 @@ const Rows = ({
               : "hsl(0 0% 16%)";
 
           return (
-            <Td class="p-0">
+            <Td class="p-0 relative group hover:z-50">
               <Cell bg={colorStr} fg={textColor} />
+              <div class="absolute w-full hidden group-hover:flex flex-col gap-2 pt-2">
+                <For each={otherColorFormats}>
+                  {(fmt) => (
+                    <Cell bg={colors.Stringify(clrVal[fmt])} fg={textColor} />
+                  )}
+                </For>
+              </div>
             </Td>
           );
         })}
@@ -138,10 +152,7 @@ const Cell = ({ bg, fg, class: className }: CellProps) => {
         "background-color": bg,
         color: fg,
       }}
-      class={cn(
-        "font-mono p-2 cursor-pointer hover:z-50 hover:scale-110",
-        className,
-      )}
+      class={cn("font-mono p-2 cursor-pointer hover:scale-110", className)}
       onclick={() => {
         navigator.clipboard.writeText(bg);
         showToast(() => ({
