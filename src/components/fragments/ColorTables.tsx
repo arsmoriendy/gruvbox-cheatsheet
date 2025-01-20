@@ -117,30 +117,43 @@ const Rows = ({
               : "hsl(0 0% 16%)";
 
           return (
-            <Td
-              style={{
-                "background-color": clrVal.hex,
-                color: textColor,
-              }}
-              class="relative font-mono py-2 cursor-pointer hover:z-50 hover:scale-110"
-              onclick={() => {
-                navigator.clipboard.writeText(colorStr);
-                showToast(() => ({
-                  icon: (iconProps) => <ClipboardCheck {...iconProps} />,
-                  title: <>Copied to clipboard</>,
-                  style: {
-                    "background-color": clrVal.hex,
-                    color: textColor,
-                    "border-color": textColor,
-                  },
-                  class: "border",
-                }));
-              }}
-            >
-              {colorStr}
+            <Td class="p-0">
+              <Cell bg={colorStr} fg={textColor} />
             </Td>
           );
         })}
       </tr>
     ),
   );
+
+type CellProps = {
+  bg: string;
+  fg: string;
+};
+
+const Cell = ({ bg, fg }: CellProps) => {
+  return (
+    <div
+      style={{
+        "background-color": bg,
+        color: fg,
+      }}
+      class="relative font-mono p-2 cursor-pointer hover:z-50 hover:scale-110"
+      onclick={() => {
+        navigator.clipboard.writeText(bg);
+        showToast(() => ({
+          icon: (iconProps) => <ClipboardCheck {...iconProps} />,
+          title: <>Copied to clipboard</>,
+          style: {
+            "background-color": bg,
+            color: fg,
+            "border-color": fg,
+          },
+          class: "border",
+        }));
+      }}
+    >
+      {bg}
+    </div>
+  );
+};
