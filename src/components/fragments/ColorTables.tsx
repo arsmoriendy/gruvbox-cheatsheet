@@ -7,6 +7,7 @@ import { showToast } from "../elements/toast";
 import Lightbulb from "lucide-solid/icons/lightbulb";
 import { toaster } from "@kobalte/core";
 import ClipboardCheck from "lucide-solid/icons/clipboard-check";
+import { cn } from "~/lib/utils";
 
 export const ColorTables = () => {
   const [settings, setSettings] = useContext(SettingsContext);
@@ -54,11 +55,11 @@ export const ColorTables = () => {
 const borderClass = "border";
 
 const Th = ({ class: className, ...props }: JSX.IntrinsicElements["th"]) => (
-  <th class={`${borderClass} ${className}`} {...props} />
+  <th class={cn(borderClass, className)} {...props} />
 );
 
 const Td = ({ class: className, ...props }: JSX.IntrinsicElements["td"]) => (
-  <td class={`${borderClass} px-2 ${className}`} {...props} />
+  <td class={cn(borderClass, "px-2", className)} {...props} />
 );
 
 const ColorTable = ({
