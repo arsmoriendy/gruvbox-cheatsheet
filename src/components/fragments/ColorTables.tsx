@@ -129,16 +129,19 @@ const Rows = ({
 type CellProps = {
   bg: string;
   fg: string;
-};
+} & JSX.IntrinsicElements["div"];
 
-const Cell = ({ bg, fg }: CellProps) => {
+const Cell = ({ bg, fg, class: className }: CellProps) => {
   return (
     <div
       style={{
         "background-color": bg,
         color: fg,
       }}
-      class="font-mono p-2 cursor-pointer hover:z-50 hover:scale-110"
+      class={cn(
+        "font-mono p-2 cursor-pointer hover:z-50 hover:scale-110",
+        className,
+      )}
       onclick={() => {
         navigator.clipboard.writeText(bg);
         showToast(() => ({
