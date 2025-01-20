@@ -124,15 +124,22 @@ const Rows = ({
               : "hsl(0 0% 16%)";
 
           return (
-            <Td class="p-0 relative group hover:z-50">
-              <Cell bg={colorStr} fg={textColor} />
-              <div class="absolute w-full hidden group-hover:flex flex-col gap-2 pt-2">
-                <For each={otherColorFormats}>
-                  {(fmt) => (
-                    <Cell bg={colors.Stringify(clrVal[fmt])} fg={textColor} />
-                  )}
-                </For>
-              </div>
+            <Td class="p-0">
+              <button class="relative w-full text-left group hover:z-40 focus:z-40">
+                <div class="hidden group-hover:block group-focus:block fixed top-0 left-0 w-full h-full bg-background/50 pointer-events-none" />
+                <Cell class="relative" bg={colorStr} fg={textColor} />
+                <div class="absolute w-full hidden group-hover:flex group-focus:flex flex-col gap-2 pt-2">
+                  <For each={otherColorFormats}>
+                    {(fmt) => (
+                      <Cell
+                        bg={colors.Stringify(clrVal[fmt])}
+                        fg={textColor}
+                        class="truncate"
+                      />
+                    )}
+                  </For>
+                </div>
+              </button>
             </Td>
           );
         })}
