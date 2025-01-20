@@ -138,7 +138,7 @@ const Cell = ({ bg, fg }: CellProps) => {
         "background-color": bg,
         color: fg,
       }}
-      class="relative font-mono p-2 cursor-pointer hover:z-50 hover:scale-110"
+      class="font-mono p-2 cursor-pointer hover:z-50 hover:scale-110"
       onclick={() => {
         navigator.clipboard.writeText(bg);
         showToast(() => ({
