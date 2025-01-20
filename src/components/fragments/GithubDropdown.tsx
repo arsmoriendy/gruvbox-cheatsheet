@@ -1,4 +1,4 @@
-import { For } from "solid-js";
+import { For, JSXElement } from "solid-js";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -21,8 +21,16 @@ const queryClient = new QueryClient();
 
 export const GithubDropdown = () => {
   const repos: RepoItemProps[] = [
-    { user: "arsmoriendy", repo: "gruvbox-cheatsheet" },
-    { user: "morhetz", repo: "gruvbox" },
+    {
+      user: "arsmoriendy",
+      repo: "gruvbox-cheatsheet",
+      desc: "Unofficial Gruvbox colorscheme cheatsheet website",
+    },
+    {
+      user: "morhetz",
+      repo: "gruvbox",
+      desc: "Original Gruvbox colorscheme, unaffiliated with this website",
+    },
   ];
 
   return (
@@ -46,6 +54,7 @@ export const GithubDropdown = () => {
 type RepoItemProps = {
   user: string;
   repo: string;
+  desc: JSXElement;
 };
 
 const gqlClient = new GraphQLClient("https://api.github.com/graphql", {
@@ -68,7 +77,7 @@ type GqlStarRes = {
   };
 };
 
-const RepoItem = ({ user, repo }: RepoItemProps) => {
+const RepoItem = ({ user, repo, desc }: RepoItemProps) => {
   const repoPath = `${user}/${repo}`;
 
   const res = createQuery(() => ({
@@ -88,10 +97,15 @@ const RepoItem = ({ user, repo }: RepoItemProps) => {
   return (
     <DropdownMenuItem
       as="a"
-      class="cursor-pointer group justify-between gap-7"
+      class="cursor-pointer group justify-between gap-7 text-muted-foreground"
       href={`https://github.com/${repoPath}`}
     >
-      <span class="font-mono">{repoPath}</span>
+      <div>
+        <h5 class="font-mono text-foreground group-hover:text-accent-foreground group-focus:text-accent-foreground">
+          {repoPath}
+        </h5>
+        <small>{desc}</small>
+      </div>
       <RepoStars stars={res.data?.repository.stargazerCount} />
     </DropdownMenuItem>
   );
@@ -100,7 +114,7 @@ const RepoItem = ({ user, repo }: RepoItemProps) => {
 const formatter = Intl.NumberFormat("en", { notation: "compact" });
 
 const RepoStars = (props: { stars?: number }) => (
-  <div class="text-muted-foreground group-hover:text-accent-foreground group-focus:text-accent-foreground flex items-center">
+  <div class="flex items-center">
     <Star size={12} class="mr-2" />
     {props.stars === undefined ? "?" : formatter.format(props.stars)}
   </div>
