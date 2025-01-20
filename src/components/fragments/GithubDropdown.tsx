@@ -15,7 +15,6 @@ import {
 } from "@tanstack/solid-query";
 import { gql, GraphQLClient } from "graphql-request";
 import { asyncWrapError } from "~/lib/wrapError";
-import { Badge } from "../elements/badge";
 import Star from "lucide-solid/icons/star";
 
 const queryClient = new QueryClient();
