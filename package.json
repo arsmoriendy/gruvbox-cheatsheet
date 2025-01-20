@@ -36,6 +36,7 @@
     "graphql": "^16.10.0",
     "graphql-request": "^7.1.2",
     "lucide-solid": "^0.471.0",
+    "motion": "^11.18.1",
     "shiki": "^1.27.2",
     "solid-js": "^1.9.3",
     "tailwind-merge": "^2.6.0",
