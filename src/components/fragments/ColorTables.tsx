@@ -109,11 +109,11 @@ const animateCellsDrop = (cells: NodeListOf<Element>) => {
   animate(cells, { opacity: [0, 100], y: [-100, 0] }, { delay: stagger(0.1) });
 };
 
-const Rows = ({
-  entries,
-}: {
+type RowsProps = {
   entries: colors.ColorEntries | colors.MonoChromeEntry[];
-}) =>
+};
+
+const Rows = ({ entries }: RowsProps) =>
   Object.entries(entries).map(
     ([clrName, clrVals]: [
       string,
