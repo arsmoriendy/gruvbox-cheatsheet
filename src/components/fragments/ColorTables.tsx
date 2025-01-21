@@ -105,6 +105,10 @@ const ColorTable = ({
   </table>
 );
 
+const animateCellsDrop = (cells: NodeListOf<Element>) => {
+  animate(cells, { opacity: [0, 100], y: [-100, 0] }, { delay: stagger(0.1) });
+};
+
 const Rows = ({
   entries,
 }: {
@@ -133,14 +137,6 @@ const Rows = ({
 
           // hocus: hovered/focused
           const [hocus, setHocus] = createSignal(false);
-
-          const animateCellsDrop = (cells: NodeListOf<Element>) => {
-            animate(
-              cells,
-              { opacity: [0, 100], y: [-100, 0] },
-              { delay: stagger(0.1) },
-            );
-          };
 
           let ul!: HTMLUListElement;
 
