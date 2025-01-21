@@ -195,19 +195,8 @@ type CellProps = {
 } & JSX.IntrinsicElements["div"];
 
 const Cell = ({ bg, fg, class: className }: CellProps) => {
-  let cell!: HTMLDivElement;
-  const sizeup = () => {
-    animate(cell, { scale: 1.1 });
-  };
-  const sizedown = () => {
-    animate(cell, { scale: 1 });
-  };
-
   return (
     <div
-      ref={cell}
-      onmouseenter={sizeup}
-      onmouseleave={sizedown}
       style={{
         "background-color": bg,
         color: fg,
