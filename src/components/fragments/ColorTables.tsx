@@ -167,7 +167,7 @@ const Rows = ({
                 <ul
                   ref={ul}
                   class={cn(
-                    "absolute w-full hidden flex-col gap-2 pt-2",
+                    "absolute w-full hidden flex-col",
                     hocus() && "flex",
                   )}
                 >
