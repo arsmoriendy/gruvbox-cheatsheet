@@ -189,6 +189,14 @@ const SettingsContent = () => {
         </Select>
       </SettingsEntry>
 
+      <SettingsEntry name="showSuffix">
+        <Checkbox
+          id="show"
+          checked={settings.showSuffix}
+          onChange={() => setSettings("showSuffix", !settings.showSuffix)}
+        />
+      </SettingsEntry>
+
       <SettingsEntry name="theme">
         <Select
           id="theme"

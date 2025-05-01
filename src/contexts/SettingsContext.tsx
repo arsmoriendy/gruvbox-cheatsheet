@@ -31,8 +31,10 @@ export const SettingsSchema = z
     ignoreToasts: z.object({
       cellCopy: z.boolean(),
     }),
+    showSuffix: z.boolean().describe("Show surrounding indicators"),
   })
   .default({
+    showSuffix: true,
     colorFormat: "hsl",
     showTable: {
       dark: true,

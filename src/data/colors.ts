@@ -18,17 +18,17 @@ export type Color = RGB | HSL | string;
 export const Stringify = (c: Color): string => {
   if ((<HSL>c).h !== undefined) {
     c = c as HSL;
-    const [{ roundFloats, separator, usePercent }] =
+    const [{ roundFloats, separator, usePercent, showSuffix }] =
       useContext(SettingsContext);
     const cRound = (x: number) => (roundFloats ? Math.round(x) : x);
     const cPercent = usePercent ? "%" : "";
 
-    return `hsl(${c.h}${separator}${cRound(c.s)}${cPercent}${separator}${cRound(c.l)}${cPercent})`;
+    return `${showSuffix ? "hsl(" : ""}${c.h}${separator}${cRound(c.s)}${cPercent}${separator}${cRound(c.l)}${cPercent}${showSuffix ? ")" : ""}`;
   }
 
   if ((<RGB>c).r !== undefined) {
     c = c as RGB;
-    const [{ separator, usePercent, roundFloats }] =
+    const [{ separator, usePercent, roundFloats, showSuffix }] =
       useContext(SettingsContext);
     const cPercent = (x: number) => {
       if (usePercent) {
@@ -39,7 +39,7 @@ export const Stringify = (c: Color): string => {
       return x;
     };
 
-    return `rgb(${cPercent(c.r)}${separator}${cPercent(c.g)}${separator}${cPercent(c.b)})`;
+    return `${showSuffix ? "rgb(" : ""}${cPercent(c.r)}${separator}${cPercent(c.g)}${separator}${cPercent(c.b)}${showSuffix ? ")" : ""}`;
   }
 
   return c as string;
