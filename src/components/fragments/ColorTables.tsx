@@ -7,6 +7,7 @@ import { showToast } from "../elements/toast";
 import Lightbulb from "lucide-solid/icons/lightbulb";
 import { toaster } from "@kobalte/core";
 import ClipboardCheck from "lucide-solid/icons/clipboard-check";
+import convert from "color-convert";
 
 export const ColorTables = () => {
   const [settings, setSettings] = useContext(SettingsContext);
@@ -106,19 +107,17 @@ const Rows = ({
       <tr>
         <Td>{capitalize(clrName)}</Td>
         {Object.values(clrVals).map((clrVal) => {
-          const [{ colorFormat }] = useContext(SettingsContext);
+          const colorStr = colors.Stringify(clrVal);
+          const hsl = convert.rgb.hsl(clrVal.r, clrVal.g, clrVal.b);
+          const hex = `#${convert.rgb.hex(clrVal.r, clrVal.g, clrVal.b)}`;
 
-          const color = clrVal[colorFormat];
-          const colorStr = colors.Stringify(color);
           const textColor =
-            clrVal.hsl.s < 20 || clrVal.hsl.l < 50
-              ? "hsl(48 87% 88%)"
-              : "hsl(0 0% 16%)";
+            hsl[1] < 20 || hsl[2] < 50 ? "hsl(48 87% 88%)" : "hsl(0 0% 16%)";
 
           return (
             <Td
               style={{
-                "background-color": clrVal.hex,
+                "background-color": hex,
                 color: textColor,
               }}
               class="relative font-mono py-2 cursor-pointer hover:z-50 hover:scale-110"
@@ -128,7 +127,7 @@ const Rows = ({
                   icon: (iconProps) => <ClipboardCheck {...iconProps} />,
                   title: <>Copied to clipboard</>,
                   style: {
-                    "background-color": clrVal.hex,
+                    "background-color": hex,
                     color: textColor,
                     "border-color": textColor,
                   },
