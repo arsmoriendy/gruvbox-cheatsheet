@@ -18,13 +18,13 @@ export const Stringify = (c: RGB): string => {
   const [{ colorFormat, roundFloats, separator, usePercent, showSuffix }] =
     useContext(SettingsContext);
 
-  const cRound = (x: number) => (roundFloats ? Math.round(x) : x);
+  const cRound = (x: number) => (roundFloats ? x.toFixed() : x.toFixed(2));
 
   switch (colorFormat) {
     case "hsl":
-      const hsl = convert.rgb.hsl(c.r, c.g, c.b);
+      const hsl = convert.rgb.hsl.raw(c.r, c.g, c.b);
       const percent = usePercent ? "%" : "";
-      return `${showSuffix ? "hsl(" : ""}${hsl[0]}${separator}${cRound(hsl[1])}${percent}${separator}${cRound(hsl[2])}${percent}${showSuffix ? ")" : ""}`;
+      return `${showSuffix ? "hsl(" : ""}${cRound(hsl[0])}${separator}${cRound(hsl[1])}${percent}${separator}${cRound(hsl[2])}${percent}${showSuffix ? ")" : ""}`;
 
     case "rgb":
       const cPercent = (x: number) => {
