@@ -16,7 +16,7 @@ import { GithubDropdown } from "./components/fragments/GithubDropdown";
 const App: Component = () => {
   return (
     <SettingsContextProvider>
-      <div class="flex flex-col max-w-2xl xl:max-w-7xl relative left-1/2 -translate-x-1/2 px-2">
+      <div class="flex flex-col max-w-2xl xl:max-w-[90rem] relative left-1/2 -translate-x-1/2 px-2">
         <header class="flex items-center justify-between my-2">
           <h1 class="font-bold text-xl">Gruvbox Cheatsheet</h1>
           <div class="flex gap-2">
