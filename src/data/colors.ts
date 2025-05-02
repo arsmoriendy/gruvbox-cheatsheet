@@ -25,15 +25,15 @@ export const Stringify = (c: RGB): string => {
   const percent = usePercent ? "%" : "";
 
   let str: string;
-  let h, s, l, v: number;
 
   switch (colorFormat) {
-    case "hsl":
-      [h, s, l] = convert.rgb.hsl.raw(c.r, c.g, c.b);
+    case "hsl": {
+      const [h, s, l] = convert.rgb.hsl.raw(c.r, c.g, c.b);
       str = `${cRound(h)}${separator}${cRound(s)}${percent}${separator}${cRound(l)}${percent}`;
       return showSuffix ? wrapSuffix(colorFormat, str) : str;
+    }
 
-    case "rgb":
+    case "rgb": {
       const cPercent = (x: number) => {
         if (usePercent) {
           const xp = (x / 255) * 100;
@@ -44,14 +44,17 @@ export const Stringify = (c: RGB): string => {
       };
       str = `${cPercent(c.r)}${separator}${cPercent(c.g)}${separator}${cPercent(c.b)}`;
       return showSuffix ? wrapSuffix(colorFormat, str) : str;
+    }
 
-    case "hex":
+    case "hex": {
       return convert.rgb.hex(c.r, c.g, c.b);
+    }
 
-    case "hsv":
-      [h, s, v] = convert.rgb.hsv.raw(c.r, c.g, c.b);
+    case "hsv": {
+      const [h, s, v] = convert.rgb.hsv.raw(c.r, c.g, c.b);
       str = `${cRound(h)}${separator}${cRound(s)}${percent}${separator}${cRound(v)}${percent}`;
       return showSuffix ? wrapSuffix(colorFormat, str) : str;
+    }
   }
 };
 
