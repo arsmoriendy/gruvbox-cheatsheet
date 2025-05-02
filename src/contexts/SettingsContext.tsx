@@ -7,7 +7,7 @@ import zsodm from "../lib/zsodm";
 export const SettingsSchema = z
   .object({
     colorFormat: z
-      .enum(["hsl", "rgb", "hex"])
+      .enum(["hsl", "hsv", "rgb", "hex"])
       .describe("The color format for each cell color"),
     showTable: z
       .object({
