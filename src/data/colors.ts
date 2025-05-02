@@ -14,6 +14,9 @@ export type HSL = {
   l: number;
 };
 
+const wrapSuffix = (formatPrefix: string, str: string) =>
+  `${formatPrefix}(${str})`;
+
 export const Stringify = (c: RGB): string => {
   const [{ colorFormat, roundFloats, separator, usePercent, showSuffix }] =
     useContext(SettingsContext);
@@ -21,10 +24,13 @@ export const Stringify = (c: RGB): string => {
   const cRound = (x: number) => (roundFloats ? x.toFixed() : x.toFixed(2));
   const percent = usePercent ? "%" : "";
 
+  let str: string;
+
   switch (colorFormat) {
     case "hsl":
       const hsl = convert.rgb.hsl.raw(c.r, c.g, c.b);
-      return `${showSuffix ? "hsl(" : ""}${cRound(hsl[0])}${separator}${cRound(hsl[1])}${percent}${separator}${cRound(hsl[2])}${percent}${showSuffix ? ")" : ""}`;
+      str = `${cRound(hsl[0])}${separator}${cRound(hsl[1])}${percent}${separator}${cRound(hsl[2])}${percent}`;
+      return showSuffix ? wrapSuffix(colorFormat, str) : str;
 
     case "rgb":
       const cPercent = (x: number) => {
@@ -35,15 +41,16 @@ export const Stringify = (c: RGB): string => {
 
         return x;
       };
-
-      return `${showSuffix ? "rgb(" : ""}${cPercent(c.r)}${separator}${cPercent(c.g)}${separator}${cPercent(c.b)}${showSuffix ? ")" : ""}`;
+      str = `${cPercent(c.r)}${separator}${cPercent(c.g)}${separator}${cPercent(c.b)}`;
+      return showSuffix ? wrapSuffix(colorFormat, str) : str;
 
     case "hex":
       return convert.rgb.hex(c.r, c.g, c.b);
 
     case "hsv":
       const hsv = convert.rgb.hsv.raw(c.r, c.g, c.b);
-      return `${showSuffix ? "hsv(" : ""}${cRound(hsv[0])}${separator}${cRound(hsv[1])}${percent}${separator}${cRound(hsv[2])}${percent}${showSuffix ? ")" : ""}`;
+      str = `${cRound(hsv[0])}${separator}${cRound(hsv[1])}${percent}${separator}${cRound(hsv[2])}${percent}`;
+      return showSuffix ? wrapSuffix(colorFormat, str) : str;
   }
 };
 
