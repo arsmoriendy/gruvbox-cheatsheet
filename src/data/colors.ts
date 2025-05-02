@@ -17,40 +17,68 @@ export type HSL = {
 const wrapSuffix = (formatPrefix: string, str: string) =>
   `${formatPrefix}(${str})`;
 
+const percentOf = (percent: number, of: number) => (percent / 100) * of;
+const toPercent = (x: number, of: number) => (x / of) * 100;
+
 export const Stringify = (c: RGB): string => {
   const [{ colorFormat, roundFloats, separator, usePercent, showSuffix }] =
     useContext(SettingsContext);
 
-  const cRound = (x: number) => (roundFloats ? x.toFixed() : x.toFixed(2));
   const percent = usePercent ? "%" : "";
+  let point = roundFloats ? 0 : 2;
 
   switch (colorFormat) {
     case "hsl": {
-      const [h, s, l] = convert.rgb.hsl.raw(c.r, c.g, c.b);
-      const str = `${cRound(h)}${separator}${cRound(s)}${percent}${separator}${cRound(l)}${percent}`;
+      let [h, s, l] = convert.rgb.hsl.raw(c.r, c.g, c.b);
+
+      if (!usePercent) {
+        s = percentOf(s, 255);
+        l = percentOf(l, 255);
+      }
+
+      const hs = h.toFixed(point);
+      const ss = s.toFixed(point);
+      const ls = l.toFixed(point);
+
+      const str = `${hs}${separator}${ss}${percent}${separator}${ls}${percent}`;
       return showSuffix ? wrapSuffix(colorFormat, str) : str;
     }
 
     case "rgb": {
-      const cPercent = (x: number) => {
-        if (usePercent) {
-          const xp = (x / 255) * 100;
-          return `${roundFloats ? Math.round(xp) : xp.toFixed(1)}%`;
-        }
+      let { r, g, b } = c;
 
-        return x;
-      };
-      const str = `${cPercent(c.r)}${separator}${cPercent(c.g)}${separator}${cPercent(c.b)}`;
+      if (usePercent) {
+        r = toPercent(r, 255);
+        g = toPercent(g, 255);
+        b = toPercent(b, 255);
+      }
+
+      const rs = r.toFixed(point);
+      const gs = g.toFixed(point);
+      const bs = b.toFixed(point);
+
+      const str = `${rs}${percent}${separator}${gs}${percent}${separator}${bs}${percent}`;
       return showSuffix ? wrapSuffix(colorFormat, str) : str;
     }
 
     case "hex": {
-      return convert.rgb.hex(c.r, c.g, c.b);
+      let { r, g, b } = c;
+      return convert.rgb.hex(r, g, b);
     }
 
     case "hsv": {
-      const [h, s, v] = convert.rgb.hsv.raw(c.r, c.g, c.b);
-      const str = `${cRound(h)}${separator}${cRound(s)}${percent}${separator}${cRound(v)}${percent}`;
+      let [h, s, v] = convert.rgb.hsv.raw(c.r, c.g, c.b);
+
+      if (!usePercent) {
+        s = percentOf(s, 255);
+        v = percentOf(v, 255);
+      }
+
+      const hs = h.toFixed(point);
+      const ss = s.toFixed(point);
+      const vs = v.toFixed(point);
+
+      const str = `${hs}${separator}${ss}${percent}${separator}${vs}${percent}`;
       return showSuffix ? wrapSuffix(colorFormat, str) : str;
     }
   }
