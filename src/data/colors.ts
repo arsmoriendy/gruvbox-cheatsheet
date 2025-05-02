@@ -24,12 +24,10 @@ export const Stringify = (c: RGB): string => {
   const cRound = (x: number) => (roundFloats ? x.toFixed() : x.toFixed(2));
   const percent = usePercent ? "%" : "";
 
-  let str: string;
-
   switch (colorFormat) {
     case "hsl": {
       const [h, s, l] = convert.rgb.hsl.raw(c.r, c.g, c.b);
-      str = `${cRound(h)}${separator}${cRound(s)}${percent}${separator}${cRound(l)}${percent}`;
+      const str = `${cRound(h)}${separator}${cRound(s)}${percent}${separator}${cRound(l)}${percent}`;
       return showSuffix ? wrapSuffix(colorFormat, str) : str;
     }
 
@@ -42,7 +40,7 @@ export const Stringify = (c: RGB): string => {
 
         return x;
       };
-      str = `${cPercent(c.r)}${separator}${cPercent(c.g)}${separator}${cPercent(c.b)}`;
+      const str = `${cPercent(c.r)}${separator}${cPercent(c.g)}${separator}${cPercent(c.b)}`;
       return showSuffix ? wrapSuffix(colorFormat, str) : str;
     }
 
@@ -52,7 +50,7 @@ export const Stringify = (c: RGB): string => {
 
     case "hsv": {
       const [h, s, v] = convert.rgb.hsv.raw(c.r, c.g, c.b);
-      str = `${cRound(h)}${separator}${cRound(s)}${percent}${separator}${cRound(v)}${percent}`;
+      const str = `${cRound(h)}${separator}${cRound(s)}${percent}${separator}${cRound(v)}${percent}`;
       return showSuffix ? wrapSuffix(colorFormat, str) : str;
     }
   }
