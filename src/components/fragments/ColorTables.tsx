@@ -1,7 +1,6 @@
 import { JSX, onMount, useContext } from "solid-js";
 import { SettingsContext } from "../../contexts/SettingsContext";
 import * as colors from "../../data/colors";
-import capitalize from "../../lib/capitalize";
 import { Button } from "../elements/button";
 import { showToast } from "../elements/toast";
 import Lightbulb from "lucide-solid/icons/lightbulb";
@@ -38,16 +37,10 @@ export const ColorTables = () => {
   });
 
   return (
-    <div class="flex flex-col gap-2 xl:flex-row xl:justify-between">
-      {Object.entries(settings.showTable).map(
-        ([tblName, showTbl]) =>
-          showTbl && (
-            <ColorTable
-              name={`${capitalize(tblName)} Table`}
-              scheme={colors.Colors[`${tblName}Mode` as keyof colors.Colors]}
-            />
-          ),
-      )}
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2">
+      {Object.entries(colors.ColorSchemes).map(([schemeName, scheme]) => (
+        <ColorTable schemeName={schemeName} scheme={scheme} />
+      ))}
     </div>
   );
 };
@@ -63,58 +56,30 @@ const Td = ({ class: className, ...props }: JSX.IntrinsicElements["td"]) => (
 );
 
 const ColorTable = ({
-  name,
+  schemeName: name,
   scheme,
   ...props
 }: {
-  name: string;
+  schemeName: string;
   scheme: colors.ColorScheme;
 }) => (
   <table class={`border-collapse grow ${borderClass}`} {...props}>
     <thead>
       <tr>
-        <Th colspan={3}>{name}</Th>
+        <Th>{name}</Th>
       </tr>
     </thead>
-    {Object.values(scheme).map((subTbl) => (
-      <>
-        <thead>
+    <tbody>
+      {Object.entries(scheme).map(([_, value]) => {
+        const colorStr = colors.Stringify(value);
+        const hsl = convert.rgb.hsl(value.r, value.g, value.b);
+        const hex = `#${convert.rgb.hex(value.r, value.g, value.b)}`;
+
+        const textColor =
+          hsl[1] < 20 || hsl[2] < 50 ? "hsl(48 87% 88%)" : "hsl(0 0% 16%)";
+
+        return (
           <tr>
-            <Th>Color</Th>
-            {Object.keys(Object.values(subTbl)[0]).map((k) => (
-              <Th>{capitalize(k)}</Th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          <Rows entries={subTbl} />
-        </tbody>
-      </>
-    ))}
-  </table>
-);
-
-const Rows = ({
-  entries,
-}: {
-  entries: colors.ColorEntries | colors.MonoChromeEntry[];
-}) =>
-  Object.entries(entries).map(
-    ([clrName, clrVals]: [
-      string,
-      colors.ColorEntry | colors.MonoChromeEntry,
-    ]) => (
-      <tr>
-        <Td>{capitalize(clrName)}</Td>
-        {Object.values(clrVals).map((clrVal) => {
-          const colorStr = colors.Stringify(clrVal);
-          const hsl = convert.rgb.hsl(clrVal.r, clrVal.g, clrVal.b);
-          const hex = `#${convert.rgb.hex(clrVal.r, clrVal.g, clrVal.b)}`;
-
-          const textColor =
-            hsl[1] < 20 || hsl[2] < 50 ? "hsl(48 87% 88%)" : "hsl(0 0% 16%)";
-
-          return (
             <Td
               style={{
                 "background-color": hex,
@@ -137,8 +102,9 @@ const Rows = ({
             >
               {colorStr}
             </Td>
-          );
-        })}
-      </tr>
-    ),
-  );
+          </tr>
+        );
+      })}
+    </tbody>
+  </table>
+);

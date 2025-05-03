@@ -9,12 +9,6 @@ export const SettingsSchema = z
     colorFormat: z
       .enum(["hsl", "hsv", "rgb", "hex"])
       .describe("The color format for each cell color"),
-    showTable: z
-      .object({
-        dark: z.boolean().describe("Show dark color scheme table"),
-        light: z.boolean().describe("Show light color scheme table"),
-      })
-      .describe("Which color scheme table(s) to show"),
     roundFloats: z.boolean().describe("Wether or not to round floats"),
     usePercent: z.boolean().describe("Wether or not to use pecentage values"),
     separator: z
@@ -36,10 +30,6 @@ export const SettingsSchema = z
   .default({
     showSuffix: true,
     colorFormat: "hsl",
-    showTable: {
-      dark: true,
-      light: true,
-    },
     roundFloats: false,
     usePercent: true,
     separator: ", ",

@@ -1,6 +1,5 @@
-import { createEffect, JSXElement, useContext } from "solid-js";
+import { JSXElement, useContext } from "solid-js";
 import {
-  Settings,
   SettingsContext,
   SettingsSchema,
   SettingsSchemaShape,
@@ -74,24 +73,6 @@ const SettingsEntry = ({
 const SettingsContent = () => {
   const [settings, setSettings] = useContext(SettingsContext);
 
-  let lastToggled: keyof Settings["showTable"];
-
-  // show at least one table
-  createEffect(() => {
-    const { showTable } = settings;
-    const show1 = Object.values(showTable).includes(true);
-    if (show1) return;
-    Object.entries(settings.showTable).some(
-      ([tblName, showTbl]) =>
-        tblName !== lastToggled &&
-        setSettings(
-          "showTable",
-          tblName as keyof Settings["showTable"],
-          !showTbl,
-        ),
-    );
-  });
-
   return (
     <>
       <SettingsEntry name="usePercent">
@@ -123,33 +104,6 @@ const SettingsContent = () => {
           <SelectContent />
         </Select>
       </SettingsEntry>
-
-      {Object.entries(settings.showTable).map(([tblName, showTbl]) => {
-        const id = `show${capitalize(tblName)}Table`;
-        return (
-          <SettingsEntry
-            name={id}
-            description={
-              SettingsSchemaShape.showTable.shape[
-                tblName as keyof typeof SettingsSchemaShape.showTable.shape
-              ].description
-            }
-          >
-            <Checkbox
-              id={id}
-              checked={showTbl}
-              onChange={() => {
-                lastToggled = tblName as keyof Settings["showTable"];
-                setSettings(
-                  "showTable",
-                  tblName as keyof Settings["showTable"],
-                  !showTbl,
-                );
-              }}
-            />
-          </SettingsEntry>
-        );
-      })}
 
       <SettingsEntry name="roundFloats">
         <Checkbox
