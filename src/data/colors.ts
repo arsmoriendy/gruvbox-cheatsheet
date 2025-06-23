@@ -63,7 +63,9 @@ export const Stringify = (c: RGB): string => {
 
     case "hex": {
       let { r, g, b } = c;
-      return convert.rgb.hex(r, g, b);
+
+      const str = convert.rgb.hex(r, g, b);
+      return showAffix ? `#${str}` : str;
     }
 
     case "hsv": {
