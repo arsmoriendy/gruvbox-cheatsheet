@@ -14,8 +14,7 @@ export type HSL = {
   l: number;
 };
 
-const wrapAffix = (formatPrefix: string, str: string) =>
-  `${formatPrefix}(${str})`;
+const braced = (format: string, str: string) => `${format}(${str})`;
 
 const percentOf = (percent: number, of: number) => (percent / 100) * of;
 const toPercent = (x: number, of: number) => (x / of) * 100;
@@ -42,7 +41,7 @@ export const Stringify = (c: RGB): string => {
       const ls = l.toFixed(point);
 
       const str = `${hs}${separator}${ss}${percent}${separator}${ls}${percent}`;
-      return showAffix ? wrapAffix(colorFormat, str) : str;
+      return showAffix ? braced(colorFormat, str) : str;
     }
 
     case "rgb": {
@@ -59,7 +58,7 @@ export const Stringify = (c: RGB): string => {
       const bs = b.toFixed(point);
 
       const str = `${rs}${percent}${separator}${gs}${percent}${separator}${bs}${percent}`;
-      return showAffix ? wrapAffix(colorFormat, str) : str;
+      return showAffix ? braced(colorFormat, str) : str;
     }
 
     case "hex": {
@@ -80,7 +79,7 @@ export const Stringify = (c: RGB): string => {
       const vs = v.toFixed(point);
 
       const str = `${hs}${separator}${ss}${percent}${separator}${vs}${percent}`;
-      return showAffix ? wrapAffix(colorFormat, str) : str;
+      return showAffix ? braced(colorFormat, str) : str;
     }
   }
 };
