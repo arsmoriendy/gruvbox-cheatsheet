@@ -143,11 +143,11 @@ const SettingsContent = () => {
         </Select>
       </SettingsEntry>
 
-      <SettingsEntry name="showSuffix">
+      <SettingsEntry name="showAffix">
         <Checkbox
           id="show"
-          checked={settings.showSuffix}
-          onChange={() => setSettings("showSuffix", !settings.showSuffix)}
+          checked={settings.showAffix}
+          onChange={() => setSettings("showAffix", !settings.showAffix)}
         />
       </SettingsEntry>
 

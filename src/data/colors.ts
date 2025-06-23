@@ -14,15 +14,16 @@ export type HSL = {
   l: number;
 };
 
-const wrapSuffix = (formatPrefix: string, str: string) =>
+const wrapAffix = (formatPrefix: string, str: string) =>
   `${formatPrefix}(${str})`;
 
 const percentOf = (percent: number, of: number) => (percent / 100) * of;
 const toPercent = (x: number, of: number) => (x / of) * 100;
 
 export const Stringify = (c: RGB): string => {
-  const [{ colorFormat, roundFloats, separator, usePercent, showSuffix }] =
-    useContext(SettingsContext);
+  const [
+    { colorFormat, roundFloats, separator, usePercent, showAffix: showAffix },
+  ] = useContext(SettingsContext);
 
   const percent = usePercent ? "%" : "";
   let point = roundFloats ? 0 : 2;
@@ -41,7 +42,7 @@ export const Stringify = (c: RGB): string => {
       const ls = l.toFixed(point);
 
       const str = `${hs}${separator}${ss}${percent}${separator}${ls}${percent}`;
-      return showSuffix ? wrapSuffix(colorFormat, str) : str;
+      return showAffix ? wrapAffix(colorFormat, str) : str;
     }
 
     case "rgb": {
@@ -58,7 +59,7 @@ export const Stringify = (c: RGB): string => {
       const bs = b.toFixed(point);
 
       const str = `${rs}${percent}${separator}${gs}${percent}${separator}${bs}${percent}`;
-      return showSuffix ? wrapSuffix(colorFormat, str) : str;
+      return showAffix ? wrapAffix(colorFormat, str) : str;
     }
 
     case "hex": {
@@ -79,7 +80,7 @@ export const Stringify = (c: RGB): string => {
       const vs = v.toFixed(point);
 
       const str = `${hs}${separator}${ss}${percent}${separator}${vs}${percent}`;
-      return showSuffix ? wrapSuffix(colorFormat, str) : str;
+      return showAffix ? wrapAffix(colorFormat, str) : str;
     }
   }
 };

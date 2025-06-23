@@ -25,10 +25,10 @@ export const SettingsSchema = z
     ignoreToasts: z.object({
       cellCopy: z.boolean(),
     }),
-    showSuffix: z.boolean().describe("Show surrounding indicators"),
+    showAffix: z.boolean().describe("Show surrounding indicators"),
   })
   .default({
-    showSuffix: true,
+    showAffix: true,
     colorFormat: "hsl",
     roundFloats: false,
     usePercent: true,
