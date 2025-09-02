@@ -14,7 +14,7 @@ import Copy from "lucide-solid/icons/copy";
 import { SettingsContext } from "~/contexts/SettingsContext";
 import { createSignal, useContext } from "solid-js";
 import ClipboardCheck from "lucide-solid/icons/clipboard-check";
-import { Gruvbox } from "~/data/colors";
+import { Gruvbox, GruvboxCanonical } from "~/data/colors";
 
 export default () => {
   return (
@@ -46,8 +46,13 @@ const CopyTriggerButton = (props: ButtonProps) => (
 );
 
 const CopyContent = () => {
-  const jsonString = JSON.stringify(Gruvbox, null, 4);
   const [settings] = useContext(SettingsContext);
+  const jsonString = () =>
+    JSON.stringify(
+      settings.canonicalColors ? GruvboxCanonical : Gruvbox,
+      null,
+      4,
+    );
   const [copied, setCopied] = createSignal(false);
 
   return (
@@ -61,25 +66,19 @@ const CopyContent = () => {
 
       <div class="relative">
         <Button
-          size="sm"
-          class="top-2 right-2 absolute"
+          variant="outline"
+          size="icon"
+          class="top-2 right-4 absolute"
           onclick={() => {
-            setCopied(true);
-            navigator.clipboard.writeText(jsonString);
+            navigator.clipboard.writeText(jsonString()).then(() => {
+              setCopied(true);
+            });
           }}
         >
-          {copied() ? (
-            <>
-              <ClipboardCheck /> Copied!
-            </>
-          ) : (
-            <>
-              <Copy /> Copy
-            </>
-          )}
+          {copied() ? <ClipboardCheck /> : <Copy />}
         </Button>
         <div
-          innerHTML={highlightJson(jsonString, {
+          innerHTML={highlightJson(jsonString(), {
             theme: settings.darkMode
               ? "Gruvbox Dark Medium"
               : "Gruvbox Light Medium",
