@@ -72,18 +72,18 @@ const ColorTable = ({
     <tbody>
       {Object.entries(scheme).map(([_, value]) => {
         const colorStr = colors.Stringify(value);
-        const hsl = convert.rgb.hsl(value.r, value.g, value.b);
-        const hex = `#${convert.rgb.hex(value.r, value.g, value.b)}`;
 
-        const textColor =
-          hsl[1] < 20 || hsl[2] < 50 ? "hsl(48 87% 88%)" : "hsl(0 0% 16%)";
+        const [_h, s, l] = convert.rgb.hsl(value);
+        const fg = s < 20 || l < 50 ? "hsl(48 87% 88%)" : "hsl(0 0% 16%)";
+
+        const bg = `#${convert.rgb.hex(value)}`;
 
         return (
           <tr>
             <Td
               style={{
-                "background-color": hex,
-                color: textColor,
+                "background-color": bg,
+                color: fg,
               }}
               class="relative font-mono py-2 cursor-pointer hover:z-50 hover:scale-110"
               onclick={() => {
@@ -92,9 +92,9 @@ const ColorTable = ({
                   icon: (iconProps) => <ClipboardCheck {...iconProps} />,
                   title: <>Copied to clipboard</>,
                   style: {
-                    "background-color": hex,
-                    color: textColor,
-                    "border-color": textColor,
+                    "background-color": bg,
+                    color: fg,
+                    "border-color": fg,
                   },
                   class: "border",
                 }));

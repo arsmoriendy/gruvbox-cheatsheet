@@ -1,18 +1,6 @@
 import { useContext } from "solid-js";
 import { SettingsContext } from "../contexts/SettingsContext";
-import convert from "color-convert";
-
-export type RGB = {
-  r: number;
-  g: number;
-  b: number;
-};
-
-export type HSL = {
-  h: number;
-  s: number;
-  l: number;
-};
+import convert, { HEX, RGB, HSL } from "color-convert";
 
 const braced = (format: string, str: string) => `${format}(${str})`;
 
@@ -29,7 +17,7 @@ export const Stringify = (c: RGB): string => {
 
   switch (colorFormat) {
     case "hsl": {
-      let [h, s, l] = convert.rgb.hsl.raw(c.r, c.g, c.b);
+      let [h, s, l] = convert.rgb.hsl.raw(c);
 
       if (!usePercent) {
         s = percentOf(s, 255);
@@ -45,7 +33,7 @@ export const Stringify = (c: RGB): string => {
     }
 
     case "rgb": {
-      let { r, g, b } = c;
+      let [r, g, b] = c;
 
       if (usePercent) {
         r = toPercent(r, 255);
@@ -62,14 +50,14 @@ export const Stringify = (c: RGB): string => {
     }
 
     case "hex": {
-      let { r, g, b } = c;
+      let [r, g, b] = c;
 
       const str = convert.rgb.hex(r, g, b);
       return showAffix ? `#${str}` : str;
     }
 
     case "hsv": {
-      let [h, s, v] = convert.rgb.hsv.raw(c.r, c.g, c.b);
+      let [h, s, v] = convert.rgb.hsv.raw(c);
 
       if (!usePercent) {
         s = percentOf(s, 255);
@@ -86,10 +74,8 @@ export const Stringify = (c: RGB): string => {
   }
 };
 
-export type ColorValue = RGB;
-
 export type ColorScheme = {
-  [colorName: string]: ColorValue;
+  [colorName: string]: RGB;
 };
 
 export type Theme = {
@@ -98,319 +84,79 @@ export type Theme = {
 
 export const Gruvbox: Theme = {
   darkMuted: {
-    background: {
-      r: 40,
-      g: 40,
-      b: 40,
-    },
-    red: {
-      r: 204,
-      g: 36,
-      b: 29,
-    },
-    green: {
-      r: 152,
-      g: 151,
-      b: 26,
-    },
-    yellow: {
-      r: 215,
-      g: 153,
-      b: 33,
-    },
-    blue: {
-      r: 69,
-      g: 133,
-      b: 136,
-    },
-    purple: {
-      r: 177,
-      g: 98,
-      b: 134,
-    },
-    aqua: {
-      r: 104,
-      g: 157,
-      b: 106,
-    },
-    orange: {
-      r: 214,
-      g: 93,
-      b: 14,
-    },
-    foreground: {
-      r: 168,
-      g: 153,
-      b: 132,
-    },
+    background: [40, 40, 40],
+    red: [204, 36, 29],
+    green: [152, 151, 26],
+    yellow: [215, 153, 33],
+    blue: [69, 133, 136],
+    purple: [177, 98, 134],
+    aqua: [104, 157, 106],
+    orange: [214, 93, 14],
+    foreground: [168, 153, 132],
   },
   darkStrong: {
-    background: {
-      r: 146,
-      g: 131,
-      b: 116,
-    },
-    red: {
-      r: 251,
-      g: 73,
-      b: 52,
-    },
-    green: {
-      r: 184,
-      g: 187,
-      b: 38,
-    },
-    yellow: {
-      r: 250,
-      g: 189,
-      b: 47,
-    },
-    blue: {
-      r: 131,
-      g: 165,
-      b: 152,
-    },
-    purple: {
-      r: 211,
-      g: 134,
-      b: 155,
-    },
-    aqua: {
-      r: 142,
-      g: 192,
-      b: 124,
-    },
-    orange: {
-      r: 254,
-      g: 128,
-      b: 25,
-    },
-    foreground: {
-      r: 235,
-      g: 219,
-      b: 178,
-    },
+    background: [146, 131, 116],
+    red: [251, 73, 52],
+    green: [184, 187, 38],
+    yellow: [250, 189, 47],
+    blue: [131, 165, 152],
+    purple: [211, 134, 155],
+    aqua: [142, 192, 124],
+    orange: [254, 128, 25],
+    foreground: [235, 219, 178],
   },
   lightMuted: {
-    background: {
-      r: 251,
-      g: 241,
-      b: 199,
-    },
-    red: {
-      r: 204,
-      g: 36,
-      b: 29,
-    },
-    green: {
-      r: 152,
-      g: 151,
-      b: 26,
-    },
-    yellow: {
-      r: 215,
-      g: 153,
-      b: 33,
-    },
-    blue: {
-      r: 69,
-      g: 133,
-      b: 136,
-    },
-    purple: {
-      r: 177,
-      g: 98,
-      b: 134,
-    },
-    aqua: {
-      r: 104,
-      g: 157,
-      b: 106,
-    },
-    orange: {
-      r: 214,
-      g: 93,
-      b: 14,
-    },
-    foreground: {
-      r: 124,
-      g: 111,
-      b: 100,
-    },
+    background: [251, 241, 199],
+    red: [204, 36, 29],
+    green: [152, 151, 26],
+    yellow: [215, 153, 33],
+    blue: [69, 133, 136],
+    purple: [177, 98, 134],
+    aqua: [104, 157, 106],
+    orange: [214, 93, 14],
+    foreground: [124, 111, 100],
   },
   lightStrong: {
-    backgrond: {
-      r: 146,
-      g: 131,
-      b: 116,
-    },
-    red: {
-      r: 157,
-      g: 0,
-      b: 6,
-    },
-    green: {
-      r: 121,
-      g: 116,
-      b: 14,
-    },
-    yellow: {
-      r: 181,
-      g: 118,
-      b: 20,
-    },
-    blue: {
-      r: 7,
-      g: 102,
-      b: 120,
-    },
-    purple: {
-      r: 143,
-      g: 63,
-      b: 113,
-    },
-    aqua: {
-      r: 66,
-      g: 123,
-      b: 88,
-    },
-    orange: {
-      r: 175,
-      g: 58,
-      b: 3,
-    },
-    foreground: {
-      r: 60,
-      g: 56,
-      b: 54,
-    },
+    backgrond: [146, 131, 116],
+    red: [157, 0, 6],
+    green: [121, 116, 14],
+    yellow: [181, 118, 20],
+    blue: [7, 102, 120],
+    purple: [143, 63, 113],
+    aqua: [66, 123, 88],
+    orange: [175, 58, 3],
+    foreground: [60, 56, 54],
   },
   darkBackground: {
-    0: {
-      r: 29,
-      g: 32,
-      b: 33,
-    },
-    1: {
-      r: 50,
-      g: 48,
-      b: 47,
-    },
-    2: {
-      r: 60,
-      g: 56,
-      b: 54,
-    },
-    3: {
-      r: 80,
-      g: 73,
-      b: 69,
-    },
-    4: {
-      r: 102,
-      g: 91,
-      b: 84,
-    },
-    5: {
-      r: 124,
-      g: 111,
-      b: 100,
-    },
+    0: [29, 32, 33],
+    1: [50, 48, 47],
+    2: [60, 56, 54],
+    3: [80, 73, 69],
+    4: [102, 91, 84],
+    5: [124, 111, 100],
   },
   darkForeground: {
-    0: {
-      r: 251,
-      g: 241,
-      b: 199,
-    },
-    1: {
-      r: 251,
-      g: 241,
-      b: 199,
-    },
-    2: {
-      r: 235,
-      g: 219,
-      b: 178,
-    },
-    3: {
-      r: 213,
-      g: 196,
-      b: 161,
-    },
-    4: {
-      r: 189,
-      g: 174,
-      b: 147,
-    },
-    5: {
-      r: 168,
-      g: 153,
-      b: 132,
-    },
+    0: [251, 241, 199],
+    1: [251, 241, 199],
+    2: [235, 219, 178],
+    3: [213, 196, 161],
+    4: [189, 174, 147],
+    5: [168, 153, 132],
   },
   lightBackground: {
-    0: {
-      r: 249,
-      g: 245,
-      b: 215,
-    },
-    1: {
-      r: 242,
-      g: 229,
-      b: 188,
-    },
-    2: {
-      r: 235,
-      g: 219,
-      b: 178,
-    },
-    3: {
-      r: 213,
-      g: 196,
-      b: 161,
-    },
-    4: {
-      r: 189,
-      g: 174,
-      b: 147,
-    },
-    5: {
-      r: 168,
-      g: 153,
-      b: 132,
-    },
+    0: [249, 245, 215],
+    1: [242, 229, 188],
+    2: [235, 219, 178],
+    3: [213, 196, 161],
+    4: [189, 174, 147],
+    5: [168, 153, 132],
   },
   lightForeground: {
-    0: {
-      r: 40,
-      g: 40,
-      b: 40,
-    },
-    1: {
-      r: 40,
-      g: 40,
-      b: 40,
-    },
-    2: {
-      r: 60,
-      g: 56,
-      b: 54,
-    },
-    3: {
-      r: 80,
-      g: 73,
-      b: 69,
-    },
-    4: {
-      r: 102,
-      g: 92,
-      b: 84,
-    },
-    5: {
-      r: 124,
-      g: 111,
-      b: 100,
-    },
+    0: [40, 40, 40],
+    1: [40, 40, 40],
+    2: [60, 56, 54],
+    3: [80, 73, 69],
+    4: [102, 92, 84],
+    5: [124, 111, 100],
   },
 };
