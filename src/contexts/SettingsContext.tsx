@@ -26,7 +26,9 @@ export const SettingsSchema = z
       cellCopy: z.boolean(),
     }),
     showAffix: z.boolean().describe("Show surrounding indicators"),
-    canonicalColors: z.boolean().describe("Use canonical colors"),
+    canonicalColors: z
+      .boolean()
+      .describe("Show canonical colors, instead of theme colors"),
   })
   .default({
     showAffix: true,

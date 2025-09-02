@@ -18,6 +18,16 @@ import { Popover, PopoverContent, PopoverTrigger } from "../elements/popover";
 import { Button, ButtonProps } from "../elements/button";
 import Cog from "lucide-solid/icons/cog";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../elements/tooltip";
+import Info from "lucide-solid/icons/info";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "../elements/dialog";
+import { Link } from "../elements/link";
 
 export default () => {
   return (
@@ -46,7 +56,7 @@ const SettingsTriggerButton = (props: ButtonProps) => (
 
 type SettingsEntryProps = {
   name: string;
-  description?: string;
+  description?: JSXElement;
   id?: string;
   children: JSXElement;
 };
@@ -77,7 +87,6 @@ const SettingsContent = () => {
     <>
       <SettingsEntry name="usePercent">
         <Checkbox
-          id="usePercent"
           checked={settings.usePercent}
           onChange={() => setSettings("usePercent", !settings.usePercent)}
         />
@@ -85,7 +94,6 @@ const SettingsContent = () => {
 
       <SettingsEntry name="colorFormat">
         <Select
-          id="colorFormat"
           disallowEmptySelection
           value={settings.colorFormat}
           options={SettingsSchema._def.innerType.shape.colorFormat._def.values}
@@ -107,7 +115,6 @@ const SettingsContent = () => {
 
       <SettingsEntry name="roundFloats">
         <Checkbox
-          id="roundFloats"
           checked={settings.roundFloats}
           onChange={() => setSettings("roundFloats", !settings.roundFloats)}
         />
@@ -115,7 +122,6 @@ const SettingsContent = () => {
 
       <SettingsEntry name="separator">
         <Select
-          id="separator"
           disallowEmptySelection
           value={{
             label: settings.separator === ", " ? "Comma" : "Space",
@@ -145,7 +151,6 @@ const SettingsContent = () => {
 
       <SettingsEntry name="showAffix">
         <Checkbox
-          id="show"
           checked={settings.showAffix}
           onChange={() => setSettings("showAffix", !settings.showAffix)}
         />
@@ -153,7 +158,6 @@ const SettingsContent = () => {
 
       <SettingsEntry name="theme">
         <Select
-          id="theme"
           disallowEmptySelection
           value={settings.theme}
           options={SettingsSchema._def.innerType.shape.theme._def.values}
@@ -173,7 +177,44 @@ const SettingsContent = () => {
         </Select>
       </SettingsEntry>
 
-      <SettingsEntry name="canonicalColors">
+      <SettingsEntry
+        name="canonicalColors"
+        description={
+          <>
+            {SettingsSchemaShape.canonicalColors._def.description}
+            <Dialog>
+              <DialogTrigger>
+                <Tooltip>
+                  <TooltipTrigger>
+                    <Info class="inline size-3.5 mx-1" />
+                  </TooltipTrigger>
+                  <TooltipContent>More info</TooltipContent>
+                </Tooltip>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle class="flex items-center">
+                    <Info class="inline mr-2" />
+                    Canonical colors
+                  </DialogTitle>
+                </DialogHeader>
+                <p>
+                  <i>Canonical colors</i> refer to the <b>unique</b> colors
+                  listed in{" "}
+                  <Link href="https://github.com/morhetz/gruvbox-contrib/blob/150e9ca30fcd679400dc388c24930e5ec8c98a9f/color.table">
+                    the gruvbox-contrib table
+                  </Link>
+                  , whereas <i>theme colors</i> refer to the colors used in the{" "}
+                  <Link href="https://zeusofthecrows.github.io/utilities/gruvbox/#palette-in-different-formats">
+                    original vim theme
+                  </Link>
+                  .
+                </p>
+              </DialogContent>
+            </Dialog>
+          </>
+        }
+      >
         <Checkbox
           checked={settings.canonicalColors}
           onChange={() =>
