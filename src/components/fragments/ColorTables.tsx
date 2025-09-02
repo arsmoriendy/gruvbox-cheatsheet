@@ -7,6 +7,7 @@ import Lightbulb from "lucide-solid/icons/lightbulb";
 import { toaster } from "@kobalte/core";
 import ClipboardCheck from "lucide-solid/icons/clipboard-check";
 import convert from "color-convert";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../elements/tooltip";
 
 export const ColorTables = () => {
   const [settings, setSettings] = useContext(SettingsContext);
@@ -72,38 +73,46 @@ const ColorTable = ({
       </tr>
     </thead>
     <tbody>
-      {Object.entries(scheme).map(([_, value]) => {
-        const colorStr = colors.Stringify(value);
+      {Object.entries(scheme).map(([name, color]) => {
+        const colorStr = colors.Stringify(color);
 
-        const [_h, s, l] = convert.rgb.hsl(value);
+        const [_h, s, l] = convert.rgb.hsl(color);
         const fg = s < 20 || l < 50 ? "hsl(48 87% 88%)" : "hsl(0 0% 16%)";
 
-        const bg = `#${convert.rgb.hex(value)}`;
+        const bg = `#${convert.rgb.hex(color)}`;
 
         return (
           <tr>
-            <Td
-              style={{
-                "background-color": bg,
-                color: fg,
-              }}
-              class="relative font-mono py-2 cursor-pointer hover:z-50 hover:scale-110"
-              onclick={() => {
-                navigator.clipboard.writeText(colorStr);
-                showToast(() => ({
-                  icon: (iconProps) => <ClipboardCheck {...iconProps} />,
-                  title: <>Copied to clipboard</>,
-                  style: {
-                    "background-color": bg,
-                    color: fg,
-                    "border-color": fg,
-                  },
-                  class: "border",
-                }));
-              }}
-            >
-              {colorStr}
-            </Td>
+            <Tooltip placement="right">
+              <TooltipTrigger
+                as={(props: JSX.IntrinsicElements["td"]) => (
+                  <Td
+                    style={{
+                      "background-color": bg,
+                      color: fg,
+                    }}
+                    class="relative font-mono py-2 cursor-pointer hover:z-50 hover:scale-110"
+                    onclick={() => {
+                      navigator.clipboard.writeText(colorStr);
+                      showToast(() => ({
+                        icon: (iconProps) => <ClipboardCheck {...iconProps} />,
+                        title: <>Copied to clipboard</>,
+                        style: {
+                          "background-color": bg,
+                          color: fg,
+                          "border-color": fg,
+                        },
+                        class: "border",
+                      }));
+                    }}
+                    {...props}
+                  >
+                    {colorStr}
+                  </Td>
+                )}
+              />
+              <TooltipContent>{name}</TooltipContent>
+            </Tooltip>
           </tr>
         );
       })}
