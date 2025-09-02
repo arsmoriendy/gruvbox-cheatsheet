@@ -92,11 +92,11 @@ export type ColorScheme = {
   [colorName: string]: ColorValue;
 };
 
-export type ColorSchemes = {
+export type Theme = {
   [schemeName: string]: ColorScheme;
 };
 
-export const ColorSchemes: ColorSchemes = {
+export const Gruvbox: Theme = {
   darkMuted: {
     background: {
       r: 40,

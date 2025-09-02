@@ -14,7 +14,7 @@ import Copy from "lucide-solid/icons/copy";
 import { SettingsContext } from "~/contexts/SettingsContext";
 import { createSignal, useContext } from "solid-js";
 import ClipboardCheck from "lucide-solid/icons/clipboard-check";
-import { ColorSchemes } from "~/data/colors";
+import { Gruvbox } from "~/data/colors";
 
 export default () => {
   return (
@@ -46,7 +46,7 @@ const CopyTriggerButton = (props: ButtonProps) => (
 );
 
 const CopyContent = () => {
-  const jsonString = JSON.stringify(ColorSchemes, null, 4);
+  const jsonString = JSON.stringify(Gruvbox, null, 4);
   const [settings] = useContext(SettingsContext);
   const [copied, setCopied] = createSignal(false);
 
