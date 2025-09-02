@@ -41,7 +41,7 @@ export const SettingsSchema = z
       cellCopy: false,
     },
     darkMode: false,
-    canonicalColors: true,
+    canonicalColors: false,
   });
 
 export type Settings = z.infer<typeof SettingsSchema>;
