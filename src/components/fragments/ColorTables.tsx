@@ -38,7 +38,9 @@ export const ColorTables = () => {
 
   return (
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2">
-      {Object.entries(colors.Gruvbox).map(([schemeName, scheme]) => (
+      {Object.entries(
+        settings.canonicalColors ? colors.GruvboxCanonical : colors.Gruvbox,
+      ).map(([schemeName, scheme]) => (
         <ColorTable schemeName={schemeName} scheme={scheme} />
       ))}
     </div>

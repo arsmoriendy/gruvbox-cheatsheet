@@ -1,6 +1,6 @@
 import { useContext } from "solid-js";
 import { SettingsContext } from "../contexts/SettingsContext";
-import convert, { HEX, RGB, HSL } from "color-convert";
+import convert, { RGB } from "color-convert";
 
 const braced = (format: string, str: string) => `${format}(${str})`;
 
@@ -8,9 +8,8 @@ const percentOf = (percent: number, of: number) => (percent / 100) * of;
 const toPercent = (x: number, of: number) => (x / of) * 100;
 
 export const Stringify = (c: RGB): string => {
-  const [
-    { colorFormat, roundFloats, separator, usePercent, showAffix: showAffix },
-  ] = useContext(SettingsContext);
+  const [{ colorFormat, roundFloats, separator, usePercent, showAffix }] =
+    useContext(SettingsContext);
 
   const percent = usePercent ? "%" : "";
   let point = roundFloats ? 0 : 2;
@@ -158,5 +157,52 @@ export const Gruvbox: Theme = {
     3: [80, 73, 69],
     4: [102, 92, 84],
     5: [124, 111, 100],
+  },
+};
+
+export const GruvboxCanonical: Theme = {
+  bright: {
+    red: [251, 73, 52],
+    green: [184, 187, 38],
+    yellow: [250, 189, 47],
+    blue: [131, 165, 152],
+    purple: [211, 134, 155],
+    aqua: [142, 192, 124],
+    orange: [254, 128, 25],
+  },
+  neutral: {
+    red: [204, 36, 29],
+    green: [152, 151, 26],
+    yellow: [215, 153, 33],
+    blue: [69, 133, 136],
+    purple: [177, 98, 134],
+    aqua: [104, 157, 106],
+    orange: [214, 93, 14],
+  },
+  faded: {
+    red: [157, 0, 6],
+    green: [121, 116, 14],
+    yellow: [181, 118, 20],
+    blue: [7, 102, 120],
+    purple: [143, 63, 113],
+    aqua: [66, 123, 88],
+    orange: [175, 58, 3],
+  },
+  monochrome: {
+    dark0Hard: [29, 32, 33],
+    dark0: [40, 40, 40],
+    dark0Soft: [50, 48, 47],
+    dark1: [60, 56, 54],
+    dark2: [80, 73, 69],
+    dark3: [102, 92, 84],
+    dark4: [124, 111, 100],
+    gray: [146, 131, 116],
+    light4: [168, 153, 132],
+    light3: [189, 174, 147],
+    light2: [213, 196, 161],
+    light1: [235, 219, 178],
+    light0Soft: [242, 229, 188],
+    light0: [251, 241, 199],
+    light0Hard: [249, 245, 215],
   },
 };

@@ -172,6 +172,15 @@ const SettingsContent = () => {
           <SelectContent />
         </Select>
       </SettingsEntry>
+
+      <SettingsEntry name="canonicalColors">
+        <Checkbox
+          checked={settings.canonicalColors}
+          onChange={() =>
+            setSettings("canonicalColors", !settings.canonicalColors)
+          }
+        />
+      </SettingsEntry>
     </>
   );
 };
