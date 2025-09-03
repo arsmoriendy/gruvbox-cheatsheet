@@ -92,6 +92,7 @@ const ColorTable = ({
                       color: fg,
                     }}
                     class="relative font-mono py-2 cursor-pointer hover:z-50 hover:scale-110"
+                    {...props} // WARN: onclick will override events set here, ordering matters
                     onclick={() => {
                       navigator.clipboard.writeText(colorStr);
                       showToast(() => ({
@@ -105,7 +106,6 @@ const ColorTable = ({
                         class: "border",
                       }));
                     }}
-                    {...props}
                   >
                     {colorStr}
                   </Td>
